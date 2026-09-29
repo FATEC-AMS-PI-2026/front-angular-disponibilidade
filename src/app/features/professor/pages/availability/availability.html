@@ -1,0 +1,122 @@
+<div class="availability-page">
+
+  <section class="availability-card availability-card--header">
+
+    <div class="availability-heading">
+
+      <h1>Minha disponibilidade</h1>
+
+      <p>
+        Horários consolidados para atribuição e montagem de grade semestral.
+      </p>
+
+    </div>
+
+
+    <div class="availability-information">
+
+      <span>
+        <svg lucideCalendarDays [size]="11"></svg>
+
+        <strong>Turno:</strong>
+        {{ availability.semester }}
+      </span>
+
+      <span>
+        <svg lucideUserRound [size]="11"></svg>
+
+        <strong>Coordenador:</strong>
+        {{ availability.coordinator }}
+      </span>
+
+      <span>
+        <svg lucideBuilding2 [size]="11"></svg>
+
+        <strong>Ambiente:</strong>
+        Fatec Dom Amaury Castanho
+      </span>
+
+    </div>
+
+  </section>
+
+
+  <section class="availability-card">
+
+    <div class="availability-section-header">
+
+      <div>
+
+        <h2>Horários Cadastrados na Semana</h2>
+
+        <p>
+          Visualização resumida dos períodos e restrições acordadas.
+        </p>
+
+      </div>
+
+      <button class="edit-button" type="button" routerLink="/professor/availability/edit">
+        <svg lucidePencil [size]="12"></svg>
+
+        Editar disponibilidade
+      </button>
+
+    </div>
+
+
+    <div class="availability-status">
+
+      <span>Status da grade</span>
+
+      <span class="status-badge">
+
+        <span class="status-badge__dot"></span>
+
+        {{ availability.scheduleStatus }}
+
+      </span>
+
+    </div>
+
+
+    <div class="availability-grid">
+
+      @for (day of availability.days; track day.day) {
+
+      <article class="day-card">
+
+        <h3>{{ day.day }}</h3>
+
+        <div class="day-card__slots">
+
+          @for (slot of day.slots; track slot.startTime) {
+
+          <div class="availability-slot" [class]="getStatusClass(slot.status)">
+
+            <span>
+              {{ slot.startTime }} - {{ slot.endTime }}
+            </span>
+
+            <span class="availability-slot__status">
+
+              <span class="availability-slot__dot"></span>
+
+              {{ slot.status }}
+
+            </span>
+
+          </div>
+
+          }
+
+        </div>
+
+      </article>
+
+      }
+
+    </div>
+
+  </section>
+
+</div>

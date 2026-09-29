@@ -1,0 +1,40 @@
+<aside class="navbar">
+  <div class="navbar__header">
+    <a class="navbar__brand" routerLink="/professor/perfil">
+      <img src="assets/mainlogo.svg" alt="GINI" />
+    </a>
+
+    <span class="navbar__role">
+      / Professor
+    </span>
+  </div>
+
+  <nav class="navbar__menu">
+    <a class="navbar__item" routerLink="/professor/profile" routerLinkActive="navbar__item--active"
+      [routerLinkActiveOptions]="{ exact: true }">
+      <svg lucideUserRound [size]="16"></svg>
+
+      <span>Perfil</span>
+    </a>
+
+    <a class="navbar__item" routerLink="/professor/availability" routerLinkActive="navbar__item--active">
+      <svg lucideCalendarDays [size]="16"></svg>
+
+      <span>Disponibilidade</span>
+    </a>
+  </nav>
+
+  <div class="navbar__bottom">
+    <a class="navbar__item" href="#">
+      <svg lucideLogOut [size]="16"></svg>
+
+      <span>Sair</span>
+    </a>
+
+    <a class="navbar__item" href="#">
+      <svg lucideSettings [size]="16"></svg>
+
+      <span>Ajustes</span>
+    </a>
+  </div>
+</aside>

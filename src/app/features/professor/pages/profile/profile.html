@@ -1,0 +1,132 @@
+<div class="profile-page">
+  <section class="profile-card">
+    <div class="profile-card__identity">
+      <div class="profile-card__avatar">
+        <svg lucideUserRound [size]="38" [strokeWidth]="1.4"></svg>
+      </div>
+
+      <div class="profile-card__info">
+        <span class="profile-card__label">Nome</span>
+        <strong>{{ profile.name }}</strong>
+      </div>
+    </div>
+
+    <div class="profile-card__actions">
+      <div class="profile-status">
+        <span>Status</span>
+
+        <span class="status-badge">
+          <span class="status-badge__dot"></span>
+          {{ profile.status }}
+        </span>
+      </div>
+
+      <button class="edit-button" type="button">
+        <svg lucidePencil [size]="12"></svg>
+        Editar perfil
+      </button>
+    </div>
+  </section>
+
+  <section class="summary-grid">
+    <article class="summary-card">
+      <span class="summary-card__label">
+        Disciplinas ministradas
+      </span>
+
+      <div class="summary-card__values">
+        @for (discipline of profile.disciplines; track discipline) {
+        <span>{{ discipline }}</span>
+        }
+      </div>
+    </article>
+
+    <article class="summary-card">
+      <span class="summary-card__label">
+        Cursos ministrados
+      </span>
+
+      <div class="summary-card__values">
+        @for (course of profile.courses; track course) {
+        <span>{{ course }}</span>
+        }
+      </div>
+    </article>
+  </section>
+
+  <section class="schedule-section">
+    <div class="schedule-header">
+      <div>
+        <h1>Status das Grades por Semestre</h1>
+
+        <p>
+          Grade atual por professor. Filtre por semestre disponível ao lado.
+        </p>
+      </div>
+
+      <div class="schedule-actions">
+        <button class="action-button action-button--primary" type="button">
+          <svg lucideFilter [size]="12"></svg>
+          Filtrar
+        </button>
+
+        <button class="action-button action-button--primary" type="button">
+          <svg lucideDownload [size]="12"></svg>
+          Exportar Geral
+        </button>
+      </div>
+    </div>
+
+    <div class="schedule-table-wrapper">
+      <table class="schedule-table">
+        <thead>
+          <tr>
+            <th class="schedule-table__time-header">
+              Hora / Dia
+            </th>
+
+            @for (day of weekDays; track day) {
+            <th>{{ day }}</th>
+            }
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (period of schedulePeriods; track period.startTime) {
+          <tr>
+            <td class="schedule-table__time">
+              {{ period.startTime }} - {{ period.endTime }}
+            </td>
+
+            @for (day of weekDays; track day) {
+            @let classItem = getClass(
+            day,
+            period.startTime,
+            period.endTime
+            );
+
+            <td>
+              @if (classItem) {
+              <div class="class-card">
+                <strong>{{ classItem.code }}</strong>
+
+                <span>{{ classItem.discipline }}</span>
+
+                <small>{{ classItem.location }}</small>
+
+                <small>
+                  {{ classItem.startTime }} - {{ classItem.endTime }}
+                </small>
+              </div>
+              } @else {
+              <span class="free-slot">Livre</span>
+              }
+            </td>
+            }
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>

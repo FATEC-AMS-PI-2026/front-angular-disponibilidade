@@ -1,0 +1,193 @@
+<div class="availability-edit-page">
+
+  <section class="availability-edit-header">
+
+    <div class="availability-edit-header__main">
+
+      <div class="availability-edit-header__title">
+        <button class="back-button" type="button" routerLink="/professor/availability">
+          <svg lucideArrowLeft [size]="12"></svg>
+          Cancelar
+        </button>
+
+        <h1>Minha Disponibilidade</h1>
+      </div>
+
+      <div class="availability-information">
+
+        <span>
+          <svg lucideClock3 [size]="11"></svg>
+
+          <strong>Turno:</strong>
+          AMS
+        </span>
+
+        <span>
+          <svg lucideUserRound [size]="11"></svg>
+
+          <strong>Coordenador:</strong>
+          Tadeu Maffeis
+        </span>
+
+        <span>
+          <svg lucideBuilding2 [size]="11"></svg>
+
+          <strong>Ambiente:</strong>
+          Fatec Dom Amaury Castanho
+        </span>
+
+      </div>
+
+    </div>
+
+    <div class="availability-edit-header__actions">
+
+      <span class="deadline">
+        <svg lucideCalendarClock [size]="12"></svg>
+        Prazo Máximo: 30 de Junho
+      </span>
+
+      <button class="action-button" type="button">
+        <svg lucideSave [size]="12"></svg>
+        Salvar rascunho
+      </button>
+
+      <button class="action-button action-button--primary" type="button" (click)="save()">
+        <svg lucideCheck [size]="12"></svg>
+        Finalizar
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <section class="minimum-hours">
+
+    <div class="minimum-hours__header">
+
+      <strong>
+        Faltam 3 Horas para chegar ao Mínimo
+      </strong>
+
+      <span>
+        Acrescente mais horários para preencher o mínimo de horas exigidas
+      </span>
+
+    </div>
+
+    <div class="minimum-hours__progress">
+
+      <div class="progress-track">
+        <div class="progress-value"></div>
+      </div>
+
+      <div class="progress-label progress-label--minimum">
+        <strong>4h</strong>
+        <span>Min</span>
+      </div>
+
+      <div class="progress-label progress-label--maximum">
+        <strong>9h</strong>
+        <span>Max</span>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section class="availability-section">
+
+    <div class="availability-section__header">
+
+      <div>
+        <h2>Disponibilidade semanal</h2>
+
+        <p>
+          Selecione os horários de acordo com sua disponibilidade.
+        </p>
+      </div>
+
+      <div class="availability-legend">
+
+        <span>
+          <i class="availability-legend__dot availability-legend__dot--available"></i>
+          Disponível
+        </span>
+
+        <span>
+          <i class="availability-legend__dot availability-legend__dot--negotiable"></i>
+          Negociável
+        </span>
+
+        <span>
+          <i class="availability-legend__dot availability-legend__dot--unavailable"></i>
+          Indisponível
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <div class="availability-table-wrapper">
+
+      <table class="availability-table">
+
+        <thead>
+          <tr>
+
+            <th class="availability-table__time-header">
+              Hora / Dia
+            </th>
+
+            @for (day of days; track day.day) {
+            <th>{{ day.day }}</th>
+            }
+
+          </tr>
+        </thead>
+
+        <tbody>
+
+          @for (slotIndex of [0, 1, 2]; track slotIndex) {
+
+          <tr>
+
+            <td class="availability-table__time">
+              {{ days[0].slots[slotIndex].startTime }}
+              -
+              {{ days[0].slots[slotIndex].endTime }}
+            </td>
+
+            @for (day of days; track day.day) {
+
+            @let slot = day.slots[slotIndex];
+
+            <td>
+
+              <button type="button" class="availability-slot" [class]="getStatusClass(slot.status)"
+                (click)="changeStatus(slot)">
+                <span class="availability-slot__status">
+                  {{ slot.status }}
+                </span>
+              </button>
+
+            </td>
+
+            }
+
+          </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+</div>
