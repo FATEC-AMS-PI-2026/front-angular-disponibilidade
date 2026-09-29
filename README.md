@@ -1,59 +1,97 @@
-# GiniAvaliabilityAngular
+# Front Angular Disponibilidade
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.22.
+Frontend em Angular para gerenciamento da disponibilidade de professores.
 
-## Development server
+![Angular](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![SCSS](https://img.shields.io/badge/SCSS-CC6699?style=for-the-badge&logo=sass&logoColor=white)
 
-To start a local development server, run:
+## Estrutura
 
-```bash
-ng serve
+A aplicação é organizada por funcionalidades em `features` e por componentes reutilizáveis em `shared`.
+
+```text
+src/app/
+├── features/
+│   └── professor/
+│       ├── data/
+│       │   ├── professor-availability.data.ts
+│       │   ├── professor-availability-edit.data.ts
+│       │   └── professor-profile.data.ts
+│       └── pages/
+│           ├── availability/
+│           │   ├── availability.ts
+│           │   ├── availability.html
+│           │   └── availability.scss
+│           ├── availability-edit/
+│           │   ├── availability-edit.ts
+│           │   ├── availability-edit.html
+│           │   └── availability-edit.scss
+│           └── profile/
+│               ├── profile.ts
+│               ├── profile.html
+│               └── profile.scss
+└── shared/
+    └── components/
+        ├── navbar/
+        │   ├── navbar.ts
+        │   ├── navbar.html
+        │   └── navbar.scss
+        └── topbar/
+            ├── topbar.ts
+            ├── topbar.html
+            └── topbar.scss
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Funcionalidades
 
-## Code scaffolding
+### Professor
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+A funcionalidade de professor está localizada em:
 
-```bash
-ng generate component component-name
+```text
+src/app/features/professor/
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Ela possui:
 
-```bash
-ng generate --help
+- `availability`: visualização da disponibilidade do professor.
+- `availability-edit`: edição da disponibilidade.
+- `profile`: visualização das informações do perfil.
+- `data`: dados utilizados pelas páginas da funcionalidade.
+
+Novas funcionalidades, como a área do coordenador, devem ser adicionadas dentro de `features`:
+
+```text
+src/app/features/
+├── professor/
+└── coordinator/
 ```
 
-## Building
+## Componentes compartilhados
 
-To build the project run:
+Os componentes reutilizáveis ficam em:
 
-```bash
-ng build
+```text
+src/app/shared/components/
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Atualmente, estão disponíveis:
 
-## Running unit tests
+- `navbar`: barra de navegação.
+- `topbar`: barra superior.
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Outros arquivos
 
-```bash
-ng test
-```
+- `src/app/app.routes.ts`: definição das rotas.
+- `src/styles.scss`: estilos globais.
+- `public/assets/`: imagens e arquivos estáticos.
 
-## Running end-to-end tests
+## Projeto relacionado
 
-For end-to-end (e2e) testing, run:
+Parte do projeto GINI da FATEC AMS.
 
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- [Backend](https://github.com/FATEC-AMS-PI-2026/backend-spring-gini)
+- [Documentação](https://github.com/FATEC-AMS-PI-2026/docs-gini)
+- [Frontend Angular Horário](https://github.com/FATEC-AMS-PI-2026/FrontEnd-Angular-Horario)
+- [Frontend Expo Horário](https://github.com/FATEC-AMS-PI-2026/FrontEnd-Expo-Horario)
