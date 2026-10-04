@@ -26,21 +26,21 @@
       <input type="text" placeholder="Nome, Matrícula ou titulação" />
     </div>
 
-    <select>
+    <select class="filter-select">
       <option>Todos os Cursos</option>
       <option>ADS</option>
       <option>Gestão Empresarial</option>
       <option>Logística</option>
     </select>
 
-    <select>
+    <select class="filter-select">
       <option>Todos os Turnos</option>
       <option>Manhã</option>
       <option>Tarde</option>
       <option>Noite</option>
     </select>
 
-    <select>
+    <select class="filter-select">
       <option>Todos os Status</option>
       <option>Validado</option>
       <option>Restrita</option>
@@ -50,9 +50,9 @@
   </div>
 
 
-  <div class="teachers-table-wrapper">
+  <div class="data-table-wrapper">
 
-    <table class="teachers-table">
+    <table class="data-table teachers-table">
 
       <thead>
         <tr>
@@ -152,7 +152,7 @@
   </div>
 
 
-  <div class="teachers-footer">
+  <div class="data-table-footer">
 
     <span>
       Exibindo 1 a {{ teachers.length }} de {{ teachers.length }}

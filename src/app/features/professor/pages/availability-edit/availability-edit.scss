@@ -1,4 +1,4 @@
-/* .action-button, .back-button and .availability-information come from the global styles.scss */
+/* .action-button, .back-button, .availability-information and .time-grid-table are global */
 
 .availability-edit-page {
   display: flex;
@@ -108,8 +108,6 @@
 }
 
 .progress-track {
-  position: relative;
-
   width: 100%;
   height: var(--track-height);
 
@@ -129,7 +127,7 @@
 
 .progress-label {
   position: absolute;
-  top: 20px;
+  top: var(--space-5);
 
   display: flex;
   flex-direction: column;
@@ -213,97 +211,22 @@
 }
 
 .availability-legend__dot {
-  width: 8px;
-  height: 8px;
+  width: var(--dot-size);
+  height: var(--dot-size);
 
   border-radius: 50%;
 }
 
 .availability-legend__dot--available {
-  background: var(--color-success);
+  background: var(--color-available-solid);
 }
 
 .availability-legend__dot--negotiable {
-  background: var(--color-warning);
+  background: var(--color-negotiable-solid);
 }
 
 .availability-legend__dot--unavailable {
   background: var(--color-disabled);
-}
-
-/* Table */
-
-.availability-table-wrapper {
-  width: 100%;
-  overflow-x: auto;
-
-  background: var(--color-surface);
-  border: var(--border);
-  border-radius: var(--radius);
-}
-
-.availability-table {
-  width: 100%;
-
-  border-collapse: collapse;
-  table-layout: fixed;
-
-  font-size: var(--font-size-sm);
-}
-
-.availability-table th,
-.availability-table td {
-  border-right: var(--border);
-  border-bottom: var(--border);
-}
-
-.availability-table th:last-child,
-.availability-table td:last-child {
-  border-right: 0;
-}
-
-.availability-table tbody tr:last-child td {
-  border-bottom: 0;
-}
-
-.availability-table th {
-  height: var(--table-header-height);
-
-  background: var(--color-surface-muted);
-
-  color: var(--color-text);
-
-  font-size: var(--font-size-xs);
-  font-weight: 600;
-}
-
-.availability-table__time-header {
-  width: var(--table-time-width);
-}
-
-.availability-table__time {
-  width: var(--table-time-width);
-
-  padding: var(--space-2);
-
-  background: var(--color-surface-muted);
-
-  color: var(--color-text-secondary);
-
-  font-size: var(--font-size-xs);
-  line-height: 1.4;
-
-  text-align: center;
-  vertical-align: middle;
-}
-
-.availability-table td:not(.availability-table__time) {
-  height: var(--table-row-height);
-
-  padding: var(--space-2);
-
-  text-align: center;
-  vertical-align: middle;
 }
 
 /* Slot */
@@ -319,12 +242,9 @@
 
   padding: var(--space-2);
 
-  border: 0;
   border-radius: var(--radius-small);
 
   font-size: var(--font-size-xs);
-
-  cursor: pointer;
 
   transition:
     filter var(--transition-fast),
@@ -341,7 +261,6 @@
 }
 
 .availability-slot__status {
-  font-size: var(--font-size-xs);
   font-weight: 500;
 }
 
@@ -361,7 +280,6 @@
 }
 
 @media (max-width: 900px) {
-
   .availability-edit-header,
   .availability-section__header {
     align-items: flex-start;

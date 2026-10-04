@@ -114,7 +114,7 @@
   --table-header-height: 40px;
   --table-list-row-height: 60px;
   --table-row-height: 112px;
-  --table-time-width: 88px;
+  --table-time-width: 96px;
   --block-min-height: 92px;
 }
 
@@ -304,4 +304,274 @@ a {
 .availability-information strong {
   color: var(--color-text);
   font-weight: 500;
+}
+
+/* ==========================================================================
+   SHARED: Search field
+   ========================================================================== */
+
+.search-field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+
+  flex: 1;
+  height: var(--control-height);
+
+  padding: 0 var(--space-3);
+
+  background: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius-small);
+}
+
+.search-field__icon {
+  color: var(--color-text-muted);
+
+  font-size: var(--font-size-lg);
+  line-height: 1;
+}
+
+.search-field input {
+  width: 100%;
+
+  padding: 0;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+  color: var(--color-text);
+
+  font-size: var(--font-size-sm);
+}
+
+.search-field input::placeholder {
+  color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   SHARED: Filter select
+   ========================================================================== */
+
+.filter-select {
+  height: var(--control-height);
+
+  padding: 0 var(--space-8) 0 var(--space-3);
+
+  background: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius-small);
+
+  color: var(--color-text-secondary);
+
+  font-size: var(--font-size-sm);
+}
+
+/* ==========================================================================
+   SHARED: Data table
+   ========================================================================== */
+
+.data-table-wrapper {
+  min-height: calc(var(--table-header-height) + 7 * var(--table-list-row-height));
+  overflow-x: auto;
+
+  background: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.data-table {
+  width: 100%;
+
+  border-collapse: collapse;
+  table-layout: fixed;
+
+  font-size: var(--font-size-sm);
+}
+
+.data-table th,
+.data-table td {
+  border-bottom: var(--border-light);
+}
+
+.data-table th {
+  height: var(--table-header-height);
+
+  padding: 0 var(--space-3);
+
+  background: var(--color-surface-muted);
+
+  color: var(--color-text);
+
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+
+  text-align: left;
+}
+
+.data-table td {
+  height: var(--table-list-row-height);
+
+  padding: var(--space-2) var(--space-3);
+
+  color: var(--color-text);
+
+  vertical-align: middle;
+}
+
+.data-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Local tweaks on global components inside data tables */
+
+.data-table .status-badge {
+  min-width: 100px;
+}
+
+.data-table .edit-button {
+  justify-content: center;
+
+  width: 92px;
+  min-height: var(--control-height-sm);
+
+  padding: 0 var(--space-3);
+
+  font-size: var(--font-size-xs);
+}
+
+/* ==========================================================================
+   SHARED: Time grid table (hour rows × day columns)
+   ========================================================================== */
+
+.time-grid-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+
+  background: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius);
+}
+
+.time-grid-table {
+  width: 100%;
+
+  border-collapse: collapse;
+  table-layout: fixed;
+
+  font-size: var(--font-size-sm);
+}
+
+.time-grid-table th,
+.time-grid-table td {
+  border-right: var(--border);
+  border-bottom: var(--border);
+}
+
+.time-grid-table th:last-child,
+.time-grid-table td:last-child {
+  border-right: 0;
+}
+
+.time-grid-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.time-grid-table th {
+  height: var(--table-header-height);
+
+  background: var(--color-surface-muted);
+
+  color: var(--color-text);
+
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+}
+
+.time-grid-table__time-header {
+  width: var(--table-time-width);
+}
+
+.time-grid-table__time {
+  width: var(--table-time-width);
+
+  padding: var(--space-2);
+
+  background: var(--color-surface-muted);
+
+  color: var(--color-text-secondary);
+
+  font-size: var(--font-size-xs);
+  line-height: 1.4;
+
+  text-align: center;
+  vertical-align: middle;
+}
+
+.time-grid-table td:not(.time-grid-table__time) {
+  height: var(--table-row-height);
+
+  padding: var(--space-2);
+
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* ==========================================================================
+   SHARED: Table footer and pagination
+   ========================================================================== */
+
+.data-table-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: var(--table-header-height);
+
+  padding: 0 var(--space-3);
+
+  background: var(--color-surface-muted);
+  border: var(--border);
+  border-top: 0;
+  border-radius: 0 0 var(--radius) var(--radius);
+
+  color: var(--color-text-secondary);
+
+  font-size: var(--font-size-xs);
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.pagination button {
+  min-width: var(--pagination-size);
+  height: var(--pagination-size);
+
+  padding: 0 var(--space-2);
+
+  background: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius-small);
+
+  color: var(--color-text-secondary);
+
+  font-size: var(--font-size-xs);
+}
+
+.pagination button:disabled {
+  color: var(--color-text-muted);
+  opacity: 0.6;
+
+  cursor: not-allowed;
+}
+
+.pagination button.pagination__page--active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+
+  color: var(--color-on-primary);
 }

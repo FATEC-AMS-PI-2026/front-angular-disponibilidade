@@ -77,11 +77,11 @@
       </div>
     </div>
 
-    <div class="schedule-table-wrapper">
-      <table class="schedule-table">
+    <div class="time-grid-table-wrapper">
+      <table class="time-grid-table">
         <thead>
           <tr>
-            <th class="schedule-table__time-header">
+            <th class="time-grid-table__time-header">
               Hora / Dia
             </th>
 
@@ -94,7 +94,7 @@
         <tbody>
           @for (period of schedulePeriods; track period.startTime) {
           <tr>
-            <td class="schedule-table__time">
+            <td class="time-grid-table__time">
               {{ period.startTime }} - {{ period.endTime }}
             </td>
 
