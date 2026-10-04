@@ -1,30 +1,46 @@
 <aside class="navbar">
+
   <div class="navbar__header">
-    <a class="navbar__brand" routerLink="/professor/perfil">
+
+    <a class="navbar__brand" routerLink="/coordinator">
       <img src="assets/mainlogo.svg" alt="GINI" />
     </a>
 
     <span class="navbar__role">
-      Professor
+      Coordenador
     </span>
+
   </div>
 
-  <nav class="navbar__menu">
-    <a class="navbar__item" routerLink="/professor/profile" routerLinkActive="navbar__item--active"
-      [routerLinkActiveOptions]="{ exact: true }">
-      <svg lucideUserRound [size]="16"></svg>
 
-      <span>Perfil</span>
+  <nav class="navbar__menu">
+
+    <a class="navbar__item" routerLink="/coordinator" routerLinkActive="navbar__item--active"
+      [routerLinkActiveOptions]="{ exact: true }">
+      <svg lucideHome [size]="16"></svg>
+
+      <span>Início</span>
     </a>
 
-    <a class="navbar__item" routerLink="/professor/availability" routerLinkActive="navbar__item--active">
+
+    <a class="navbar__item" routerLink="/coordinator/availability" routerLinkActive="navbar__item--active">
       <svg lucideCalendarDays [size]="16"></svg>
 
       <span>Disponibilidade</span>
     </a>
+
+
+    <a class="navbar__item" routerLink="/coordinator/spaces" routerLinkActive="navbar__item--active">
+      <svg lucideMapPin [size]="16"></svg>
+
+      <span>Espaços</span>
+    </a>
+
   </nav>
 
+
   <div class="navbar__bottom">
+
     <a class="navbar__item" href="#">
       <svg lucideLogOut [size]="16"></svg>
 
@@ -36,5 +52,7 @@
 
       <span>Ajustes</span>
     </a>
+
   </div>
+
 </aside>

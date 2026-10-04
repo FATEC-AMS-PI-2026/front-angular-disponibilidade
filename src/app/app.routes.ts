@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { SpacesComponent } from './features/coordinator/pages/spaces/spaces';
 
 export const routes: Routes = [
   {
@@ -26,6 +27,15 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/professor/pages/availability-edit/availability-edit')
             .then(component => component.AvailabilityEditComponent),
+      },
+    ],
+  },
+  {
+    path: 'coordinator',
+    children: [
+      {
+        path: 'spaces',
+        component: SpacesComponent,
       },
     ],
   },

@@ -1,11 +1,19 @@
 <div class="app-shell">
+
+  @if (isCoordinator) {
+  <app-coordinator-navbar />
+  } @else {
   <app-navbar />
+  }
 
   <div class="app-content">
+
     <app-topbar />
 
     <main class="app-main">
       <router-outlet />
     </main>
+
   </div>
+
 </div>

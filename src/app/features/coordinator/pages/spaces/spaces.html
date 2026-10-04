@@ -1,0 +1,161 @@
+<div class="spaces-page">
+
+  <div class="spaces-header">
+    <div>
+      <h1>Gestão de Espaços</h1>
+
+      <p>
+        Gerencie a verificação e edição de espaços na área da Fatec
+      </p>
+    </div>
+
+    <div class="spaces-actions">
+      <button class="action-button" type="button">
+        <svg lucideDownload [size]="11"></svg>
+        Exportar Geral
+      </button>
+
+      <button class="action-button action-button--primary" type="button">
+        <svg lucidePlus [size]="11"></svg>
+        Adicionar Espaço
+      </button>
+    </div>
+  </div>
+
+
+  <div class="spaces-filters">
+
+    <div class="search-field">
+      <span class="search-field__icon">⌕</span>
+
+      <input type="text" placeholder="Nome, Andar, Tipo" />
+    </div>
+
+    <select>
+      <option>Todos os Tipos</option>
+      <option>Sala de aula</option>
+      <option>Informática</option>
+      <option>Engenharia</option>
+      <option>Maker</option>
+      <option>Laboratório</option>
+    </select>
+
+    <select>
+      <option>Todos os Andares</option>
+      <option>Térreo</option>
+      <option>1º</option>
+      <option>2º</option>
+      <option>3º</option>
+      <option>4º</option>
+    </select>
+
+  </div>
+
+
+  <div class="spaces-table-wrapper">
+
+    <table class="spaces-table">
+
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Andar</th>
+          <th>Capacidade</th>
+          <th>Tipo</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        @for (space of spaces; track space.name) {
+
+        <tr>
+
+          <td>
+            <div class="space-name">
+              <strong>{{ space.name }}</strong>
+
+              <span>{{ space.description }}</span>
+            </div>
+          </td>
+
+          <td>
+            {{ space.floor }}
+          </td>
+
+          <td>
+            {{ space.capacity }}
+          </td>
+
+          <td>
+            {{ space.type }}
+          </td>
+
+          <td>
+            <span class="status-badge" [class.status-badge--available]="space.status === 'Disponível'"
+              [class.status-badge--unavailable]="space.status === 'Indisponível'"
+              [class.status-badge--pending]="space.status === 'Pendente'">
+              <span class="status-badge__dot"></span>
+
+              {{ space.status }}
+            </span>
+          </td>
+
+          <td>
+            <button class="edit-button" type="button">
+              <svg lucidePencil [size]="10"></svg>
+              Editar
+            </button>
+          </td>
+
+        </tr>
+
+        }
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+
+  <div class="spaces-footer">
+
+    <span>
+      Exibindo 1 a {{ spaces.length }} de {{ spaces.length }}
+      espaços cadastrados
+    </span>
+
+    <div class="pagination">
+
+      <button type="button" disabled>
+        Anterior
+      </button>
+
+      <button class="pagination__page pagination__page--active" type="button">
+        1
+      </button>
+
+      <button class="pagination__page" type="button">
+        2
+      </button>
+
+      <button class="pagination__page" type="button">
+        3
+      </button>
+
+      <button class="pagination__page" type="button">
+        4
+      </button>
+
+      <button type="button">
+        Próxima
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

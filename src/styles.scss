@@ -1,27 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* ==========================================================================
+   TOKENS
+   ========================================================================== */
+
 :root {
-  // Colors
+  /* Colors: brand */
   --color-primary: #005c6d;
   --color-primary-dark: #004b59;
   --color-primary-light: #e6f1f3;
+  --color-on-primary: #ffffff;
 
+  /* Colors: surfaces */
   --color-background: #f8f8f8;
   --color-surface: #ffffff;
+  --color-surface-muted: #f2f2f2;
+  --color-hover: #f3f3f3;
+  --color-active: #eeeeee;
 
+  /* Colors: text */
   --color-text: #222222;
   --color-text-secondary: #666666;
   --color-text-muted: #8a8a8a;
+  --color-on-solid: #111111;
 
+  /* Colors: borders */
   --color-border: #dddddd;
   --color-border-light: #e8e8e8;
 
+  /* Colors: feedback */
   --color-success: #16a34a;
   --color-success-background: #dcfce7;
 
-  // Layout
-  --sidebar-width: 220px;
-  --topbar-height: 56px;
+  --color-danger: #dc2626;
+  --color-danger-background: #fee2e2;
 
-  // Spacing
+  --color-info: #2563eb;
+  --color-info-background: #dbeafe;
+
+  --color-warning: #f5b93f;
+
+  /* Colors: availability */
+  --color-available-soft-bg: #d5fae9;
+  --color-available-soft-text: #087a4b;
+  --color-available-solid: #43c46b;
+
+  --color-negotiable-soft-bg: #ffe3a8;
+  --color-negotiable-soft-text: #956000;
+  --color-negotiable-solid: #ffc34d;
+
+  --color-track: #dedede;
+  --color-disabled: #bdbdbd;
+
+  /* Spacing */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -30,16 +61,66 @@
   --space-6: 24px;
   --space-8: 32px;
 
-  // Radius
-  --radius: 12px;
-  --radius-small: 8px;
+  /* Radius */
+  --radius: 10px;
+  --radius-small: 6px;
+  --radius-pill: 999px;
 
-  // Typography
-  --font-family: Arial, Helvetica, sans-serif;
+  /* Borders */
+  --border: 1px solid var(--color-border);
+  --border-light: 1px solid var(--color-border-light);
 
-  // Shadows
+  /* Shadows */
   --shadow-card: 0 1px 3px rgb(0 0 0 / 6%);
+
+  /* Typography */
+  --font-family: "Roboto", sans-serif;
+
+  --font-size-3xs: 10px;
+  --font-size-2xs: 11px;
+  --font-size-xs: 12px;
+  --font-size-sm: 13px;
+  --font-size-md: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 18px;
+  --font-size-2xl: 22px;
+
+  /* Motion */
+  --transition-fast: 0.15s ease;
+
+  /* Layout */
+  --sidebar-width: 280px;
+  --topbar-height: 56px;
+
+  --page-padding: var(--space-6);
+  --page-gap: var(--space-5);
+  --section-gap: var(--space-3);
+
+  /* Cards */
+  --card-padding: var(--space-5);
+  --card-min-height-sm: 64px;
+  --card-min-height-lg: 100px;
+  --avatar-size: 64px;
+
+  /* Controls */
+  --control-height: 36px;
+  --control-height-sm: 30px;
+  --pagination-size: 28px;
+  --pill-height: 34px;
+  --dot-size: 6px;
+  --track-height: 6px;
+
+  /* Tables */
+  --table-header-height: 40px;
+  --table-list-row-height: 60px;
+  --table-row-height: 112px;
+  --table-time-width: 88px;
+  --block-min-height: 92px;
 }
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
 
 * {
   box-sizing: border-box;
@@ -55,19 +136,172 @@ body {
   background: var(--color-background);
   color: var(--color-text);
   font-family: var(--font-family);
-  font-size: 14px;
+  font-size: var(--font-size-lg);
 }
 
 button,
-input {
+input,
+select {
   font: inherit;
 }
 
 button {
   border: 0;
+  cursor: pointer;
 }
 
 a {
   color: inherit;
   text-decoration: none;
+}
+
+/* ==========================================================================
+   SHARED: Buttons
+   ========================================================================== */
+
+.action-button,
+.edit-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+
+  flex-shrink: 0;
+
+  min-height: var(--control-height);
+
+  padding: 0 var(--space-4);
+
+  border-radius: var(--radius-small);
+
+  background: var(--color-surface-muted);
+  color: var(--color-primary);
+
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    filter var(--transition-fast),
+    background-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.action-button:hover,
+.edit-button:hover {
+  filter: brightness(0.97);
+}
+
+.action-button:active,
+.edit-button:active {
+  transform: translateY(1px);
+}
+
+.action-button--primary,
+.edit-button {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.action-button--primary:hover,
+.edit-button:hover {
+  background: var(--color-primary-dark);
+  filter: none;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  width: fit-content;
+
+  padding: 0;
+
+  background: transparent;
+  color: var(--color-primary);
+
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+
+  cursor: pointer;
+}
+
+.back-button:hover {
+  color: var(--color-primary-dark);
+}
+
+/* ==========================================================================
+   SHARED: Status badge (default = success)
+   ========================================================================== */
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 5px var(--space-3);
+
+  border-radius: var(--radius-pill);
+
+  background: var(--color-success-background);
+  color: var(--color-success);
+
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+}
+
+.status-badge__dot {
+  width: var(--dot-size);
+  height: var(--dot-size);
+
+  border-radius: 50%;
+
+  background: currentColor;
+}
+
+.status-badge--available {
+  background: var(--color-success-background);
+  color: var(--color-success);
+}
+
+.status-badge--unavailable {
+  background: var(--color-danger-background);
+  color: var(--color-danger);
+}
+
+.status-badge--pending {
+  background: var(--color-info-background);
+  color: var(--color-info);
+}
+
+/* ==========================================================================
+   SHARED: Information row (icon + label + value)
+   ========================================================================== */
+
+.availability-information {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-6);
+
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.availability-information span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+
+  white-space: nowrap;
+}
+
+.availability-information svg {
+  color: var(--color-text-muted);
+}
+
+.availability-information strong {
+  color: var(--color-text);
+  font-weight: 500;
 }
