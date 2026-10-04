@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { SpacesComponent } from './features/coordinator/pages/spaces/spaces';
+import { TeachersAvailabilityComponent } from './features/coordinator/pages/teachers-availability/teachers-availability';
 
 export const routes: Routes = [
   {
@@ -36,6 +37,10 @@ export const routes: Routes = [
       {
         path: 'spaces',
         component: SpacesComponent,
+      },
+      {
+        path: 'teachers',
+        component: TeachersAvailabilityComponent,
       },
     ],
   },
