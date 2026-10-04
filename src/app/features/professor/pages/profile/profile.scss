@@ -1,4 +1,4 @@
-/* .action-button, .status-badge and .edit-button come from the global styles.scss */
+/* .action-button, .status-badge, .edit-button and .time-grid-table come from the global styles.scss */
 
 .profile-page {
   display: flex;
@@ -156,81 +156,6 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-}
-
-/* Table */
-
-.schedule-table-wrapper {
-  width: 100%;
-  overflow-x: auto;
-
-  background: var(--color-surface);
-  border: var(--border);
-  border-radius: var(--radius);
-}
-
-.schedule-table {
-  width: 100%;
-
-  border-collapse: collapse;
-  table-layout: fixed;
-
-  font-size: var(--font-size-sm);
-}
-
-.schedule-table th,
-.schedule-table td {
-  border-right: var(--border);
-  border-bottom: var(--border);
-}
-
-.schedule-table th:last-child,
-.schedule-table td:last-child {
-  border-right: 0;
-}
-
-.schedule-table tbody tr:last-child td {
-  border-bottom: 0;
-}
-
-.schedule-table th {
-  height: var(--table-header-height);
-
-  background: var(--color-surface-muted);
-
-  color: var(--color-text);
-
-  font-size: var(--font-size-xs);
-  font-weight: 600;
-}
-
-.schedule-table__time-header {
-  width: var(--table-time-width);
-}
-
-.schedule-table__time {
-  width: var(--table-time-width);
-
-  padding: var(--space-2);
-
-  background: var(--color-surface-muted);
-
-  color: var(--color-text-secondary);
-
-  font-size: var(--font-size-xs);
-  line-height: 1.4;
-
-  text-align: center;
-  vertical-align: middle;
-}
-
-.schedule-table td:not(.schedule-table__time) {
-  height: var(--table-row-height);
-
-  padding: var(--space-2);
-
-  text-align: center;
-  vertical-align: middle;
 }
 
 .free-slot {

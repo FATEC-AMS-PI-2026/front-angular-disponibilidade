@@ -31,7 +31,7 @@
       <input type="text" placeholder="Nome, Andar, Tipo" />
     </div>
 
-    <select>
+    <select class="filter-select">
       <option>Todos os Tipos</option>
       <option>Sala de aula</option>
       <option>Informática</option>
@@ -40,7 +40,7 @@
       <option>Laboratório</option>
     </select>
 
-    <select>
+    <select class="filter-select">
       <option>Todos os Andares</option>
       <option>Térreo</option>
       <option>1º</option>
@@ -52,9 +52,9 @@
   </div>
 
 
-  <div class="spaces-table-wrapper">
+  <div class="data-table-wrapper">
 
-    <table class="spaces-table">
+    <table class="data-table spaces-table">
 
       <thead>
         <tr>
@@ -121,7 +121,7 @@
   </div>
 
 
-  <div class="spaces-footer">
+  <div class="data-table-footer">
 
     <span>
       Exibindo 1 a {{ spaces.length }} de {{ spaces.length }}

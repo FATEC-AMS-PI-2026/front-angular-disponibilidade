@@ -1,0 +1,192 @@
+<div class="teachers-page">
+
+  <div class="teachers-header">
+    <div>
+      <h1>Gestão de Disponibilidade</h1>
+
+      <p>
+        Gerencie a verificação e edição de disponibilidade de docentes para cada disciplina
+      </p>
+    </div>
+
+    <div class="teachers-actions">
+      <button class="action-button" type="button">
+        <svg lucideDownload [size]="14"></svg>
+        Exportar Geral
+      </button>
+    </div>
+  </div>
+
+
+  <div class="teachers-filters">
+
+    <div class="search-field">
+      <span class="search-field__icon">⌕</span>
+
+      <input type="text" placeholder="Nome, Matrícula ou titulação" />
+    </div>
+
+    <select class="filter-select">
+      <option>Todos os Cursos</option>
+      <option>ADS</option>
+      <option>Gestão Empresarial</option>
+      <option>Logística</option>
+    </select>
+
+    <select class="filter-select">
+      <option>Todos os Turnos</option>
+      <option>Manhã</option>
+      <option>Tarde</option>
+      <option>Noite</option>
+    </select>
+
+    <select class="filter-select">
+      <option>Todos os Status</option>
+      <option>Validado</option>
+      <option>Restrita</option>
+      <option>Pendente</option>
+    </select>
+
+  </div>
+
+
+  <div class="data-table-wrapper">
+
+    <table class="data-table teachers-table">
+
+      <thead>
+        <tr>
+          <th>Docente</th>
+          <th>Curso e Disciplina</th>
+          <th>Carga</th>
+          <th>Período</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        @for (teacher of teachers; track teacher.registration) {
+
+        <tr [class.teachers-row--restricted]="teacher.status === 'Restrita'"
+          [class.teachers-row--pending]="teacher.status === 'Pendente'">
+
+          <td>
+            <div class="teacher">
+              <span class="teacher__avatar">
+                @if (teacher.photo) {
+                <img [src]="teacher.photo" [alt]="teacher.name" />
+                } @else {
+                <svg lucideUserX [size]="18"></svg>
+                }
+              </span>
+
+              <div class="cell-stack">
+                <strong>{{ teacher.name }}</strong>
+
+                <span>Matr. {{ teacher.registration }} • {{ teacher.email }}</span>
+              </div>
+            </div>
+          </td>
+
+          <td>
+            <div class="cell-stack">
+              <strong>{{ teacher.course }}</strong>
+
+              <span>{{ teacher.subjects }}</span>
+            </div>
+          </td>
+
+          <td>
+            <div class="workload" [class]="'workload--' + level(teacher)">
+              <div class="workload__summary">
+                <strong>{{ teacher.assignedHours }}/{{ teacher.contractedHours }}h</strong>
+
+                <span>{{ percent(teacher) }}%</span>
+              </div>
+
+              <div class="workload__bar">
+                <div class="workload__fill" [style.width.%]="percent(teacher) > 100 ? 100 : percent(teacher)"></div>
+              </div>
+            </div>
+          </td>
+
+          <td>
+            @if (teacher.shifts.length) {
+            <div class="period-list">
+              @for (shift of teacher.shifts; track shift) {
+              <span class="period-pill">{{ shift }}</span>
+              }
+            </div>
+            } @else {
+            <span class="period-empty">Não preenchido</span>
+            }
+          </td>
+
+          <td>
+            <span class="status-badge" [class.status-badge--available]="teacher.status === 'Validado'"
+              [class.status-badge--unavailable]="teacher.status === 'Restrita'"
+              [class.status-badge--pending]="teacher.status === 'Pendente'">
+              <span class="status-badge__dot"></span>
+
+              {{ teacher.status }}
+            </span>
+          </td>
+
+          <td>
+            <button class="edit-button" type="button">
+              <svg lucidePencil [size]="12"></svg>
+              Editar
+            </button>
+          </td>
+
+        </tr>
+
+        }
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+
+  <div class="data-table-footer">
+
+    <span>
+      Exibindo 1 a {{ teachers.length }} de {{ teachers.length }}
+      docentes cadastrados
+    </span>
+
+    <div class="pagination">
+
+      <button type="button" disabled>
+        Anterior
+      </button>
+
+      <button class="pagination__page pagination__page--active" type="button">
+        1
+      </button>
+
+      <button class="pagination__page" type="button">
+        2
+      </button>
+
+      <button class="pagination__page" type="button">
+        3
+      </button>
+
+      <button class="pagination__page" type="button">
+        4
+      </button>
+
+      <button type="button">
+        Próxima
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
