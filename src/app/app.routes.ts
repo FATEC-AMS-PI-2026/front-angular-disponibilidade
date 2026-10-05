@@ -1,6 +1,4 @@
 import { Routes } from '@angular/router';
-import { SpacesComponent } from './features/coordinator/pages/spaces/spaces';
-import { TeachersAvailabilityComponent } from './features/coordinator/pages/teachers-availability/teachers-availability';
 
 export const routes: Routes = [
   {
@@ -13,21 +11,15 @@ export const routes: Routes = [
     children: [
       {
         path: 'profile',
-        loadComponent: () =>
-          import('./features/professor/pages/profile/profile')
-            .then(component => component.ProfileComponent),
+        loadComponent: () => import('./features/professor/pages/profile/profile').then(component => component.ProfileComponent),
       },
       {
         path: 'availability',
-        loadComponent: () =>
-          import('./features/professor/pages/availability/availability')
-            .then(component => component.AvailabilityComponent),
+        loadComponent: () => import('./features/professor/pages/availability/availability').then(component => component.AvailabilityComponent),
       },
       {
         path: 'availability/edit',
-        loadComponent: () =>
-          import('./features/professor/pages/availability-edit/availability-edit')
-            .then(component => component.AvailabilityEditComponent),
+        loadComponent: () => import('./features/professor/pages/availability-edit/availability-edit').then(component => component.AvailabilityEditComponent),
       },
     ],
   },
@@ -35,12 +27,17 @@ export const routes: Routes = [
     path: 'coordinator',
     children: [
       {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'teachers',
+      },
+      {
         path: 'spaces',
-        component: SpacesComponent,
+        loadComponent: () => import('./features/coordinator/pages/spaces/spaces').then(component => component.SpacesComponent),
       },
       {
         path: 'teachers',
-        component: TeachersAvailabilityComponent,
+        loadComponent: () => import('./features/coordinator/pages/teachers-availability/teachers-availability').then(component => component.TeachersAvailabilityComponent),
       },
     ],
   },
