@@ -2,7 +2,7 @@
 
 Frontend em Angular para gerenciamento da disponibilidade de professores.
 
-> **Nota rápida:** Diego está explcítiamente proibido de realizar tarefas em grupo até começar a trabalhar por conta. Enquanto ele continuar se escorando nos outros, sem fazer um commit sequer, ele será descontabilizado.
+> **Nota rápida:** Diego está explicitamente proibido de participar de tarefas em grupo até começar a trabalhar de forma independente. Enquanto continuar se apoiando nos outros sem realizar sequer um commit, sua participação será desconsiderada...
 
 ![Angular](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
@@ -35,11 +35,11 @@ src/app/
 │   │       └── profile/
 │   ├── coordinator/
 │   │   ├── data/
-│   │   │   ├── coordinator-spaces.data.ts
-│   │   │   └── coordinator-teachers.data.ts
+│   │   │   ├── coordinator-teachers.data.ts
+│   │   │   └── rooms.service.ts
 │   │   └── pages/
 │   │       ├── login/
-│   │       ├── spaces/
+│   │       ├── rooms/
 │   │       └── teachers-availability/
 │   ├── password-reset/
 │   └── profile-select/
@@ -55,7 +55,7 @@ src/app/
 **`features/`** — funcionalidades por papel. Cada uma tem:
 
 - `pages/`: uma pasta por rota, em kebab-case (ex.: `availability-edit`), com o `.ts`, o `.html` e o `.scss` no mesmo diretório.
-- `data/`: tipos e dados usados pelas páginas, em arquivos `*.data.ts` (ex.: `professor-availability.data.ts`).
+- `data/`: tipos, dados e serviços usados pelas páginas (ex.: `coordinator-teachers.data.ts`, `rooms.service.ts`).
 - Funcionalidades de página única (`profile-select`, `password-reset`) ficam direto na pasta da feature, em kebab-case.
 
 **`shared/`** — código usado por mais de uma área:
@@ -83,7 +83,7 @@ As rotas são definidas em `src/app/app.routes.ts`:
 | `/professor/availability/edit` | edição da disponibilidade                | lazy         |
 | `/coordinator`                 | redireciona para `/coordinator/teachers` | —            |
 | `/coordinator/login`           | login do coordenador                     | lazy         |
-| `/coordinator/spaces`          | gestão de espaços                        | lazy         |
+| `/coordinator/rooms`        | gestão de salas                        | lazy         |
 | `/coordinator/teachers`        | gestão da disponibilidade dos docentes   | lazy         |
 | `**`                           | redireciona para `/profile-select`   | —            |
 
@@ -120,7 +120,7 @@ Em `src/app/features/professor/`:
 
 Em `src/app/features/coordinator/`:
 
-- `spaces`: gestão de espaços da Fatec (salas e laboratórios), com nome, andar, capacidade, tipo e status **Disponível**, **Indisponível** ou **Pendente**; inclui busca e filtros por tipo e andar.
+- `rooms`: gestão de salas da Fatec, integrado com a API (`GET https://gini-api.vercel.app/salas` via `RoomsService`). A API retorna código, capacidade e tipo da sala em resposta paginada; as colunas de andar e status permanecem na tabela até a próxima atualização da API. Inclui busca e filtros por tipo e andar.
 - `teachers-availability`: gestão da disponibilidade dos docentes, com busca e filtros por curso, turno e status (**Validado**, **Restrita**, **Pendente**), além do indicador de carga horária (horas atribuídas vs. contratadas: vazio, abaixo, ok, acima).
 - `data`: dados utilizados pelas páginas.
 

@@ -1,7 +1,7 @@
 /* .action-button, .edit-button, .status-badge, .search-field, .filter-select,
    .data-table and .pagination come from the global styles.scss */
 
-.spaces-page {
+.rooms-page {
   display: flex;
   flex-direction: column;
   gap: var(--page-gap);
@@ -11,7 +11,7 @@
 
 /* Header */
 
-.spaces-header {
+.rooms-header {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -19,7 +19,7 @@
   gap: var(--space-4);
 }
 
-.spaces-header h1 {
+.rooms-header h1 {
   margin: 0;
 
   color: var(--color-text);
@@ -28,7 +28,7 @@
   font-weight: 600;
 }
 
-.spaces-header p {
+.rooms-header p {
   margin: var(--space-1) 0 0;
 
   color: var(--color-text-secondary);
@@ -36,7 +36,7 @@
   font-size: var(--font-size-sm);
 }
 
-.spaces-actions {
+.rooms-actions {
   display: flex;
   align-items: center;
   gap: var(--space-2);
@@ -44,7 +44,7 @@
 
 /* Filters */
 
-.spaces-filters {
+.rooms-filters {
   display: flex;
   align-items: center;
   gap: var(--space-2);
@@ -55,56 +55,56 @@
 /* Column widths: fixed layout, so each column must fit its content
    plus the 24px horizontal cell padding */
 
-.spaces-table th:nth-child(1) {
+.rooms-table th:nth-child(1) {
   width: 36%;
 }
 
-.spaces-table th:nth-child(2) {
+.rooms-table th:nth-child(2) {
   width: 9%;
 }
 
-.spaces-table th:nth-child(3) {
+.rooms-table th:nth-child(3) {
   width: 11%;
 }
 
-.spaces-table th:nth-child(4) {
+.rooms-table th:nth-child(4) {
   width: 14%;
 }
 
-.spaces-table th:nth-child(5) {
+.rooms-table th:nth-child(5) {
   width: 16%;
 }
 
-.spaces-table th:nth-child(6) {
+.rooms-table th:nth-child(6) {
   width: 14%;
 }
 
-/* Space name */
+/* Room name */
 
-.space-name {
+.room-name {
   display: flex;
   flex-direction: column;
   gap: 3px;
 }
 
-.space-name strong {
+.room-name strong {
   font-size: var(--font-size-sm);
   font-weight: 600;
 }
 
-.space-name span {
+.room-name span {
   color: var(--color-text-secondary);
 
   font-size: var(--font-size-2xs);
 }
 
 @media (max-width: 900px) {
-  .spaces-header {
+  .rooms-header {
     align-items: flex-start;
     flex-direction: column;
   }
 
-  .spaces-filters {
+  .rooms-filters {
     flex-wrap: wrap;
   }
 
@@ -112,7 +112,7 @@
     flex: 1 1 100%;
   }
 
-  .spaces-table {
+  .rooms-table {
     min-width: 900px;
   }
 }

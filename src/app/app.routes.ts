@@ -48,8 +48,8 @@ export const routes: Routes = [
         redirectTo: 'teachers',
       },
       {
-        path: 'spaces',
-        loadComponent: () => import('./features/coordinator/pages/spaces/spaces').then(component => component.SpacesComponent),
+        path: 'rooms',
+        loadComponent: () => import('./features/coordinator/pages/rooms/rooms').then(component => component.RoomsComponent),
       },
       {
         path: 'teachers',

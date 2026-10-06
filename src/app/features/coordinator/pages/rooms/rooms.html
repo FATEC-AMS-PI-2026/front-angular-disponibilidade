@@ -1,15 +1,15 @@
-<div class="spaces-page">
+<div class="rooms-page">
 
-  <div class="spaces-header">
+  <div class="rooms-header">
     <div>
-      <h1>Gestão de Espaços</h1>
+      <h1>Salas</h1>
 
       <p>
-        Gerencie a verificação e edição de espaços na área da Fatec
+        Gerencie as salas da Fatec
       </p>
     </div>
 
-    <div class="spaces-actions">
+    <div class="rooms-actions">
       <button class="action-button" type="button">
         <svg lucideDownload [size]="11"></svg>
         Exportar Geral
@@ -17,27 +17,26 @@
 
       <button class="action-button action-button--primary" type="button">
         <svg lucidePlus [size]="11"></svg>
-        Adicionar Espaço
+        Adicionar Sala
       </button>
     </div>
   </div>
 
 
-  <div class="spaces-filters">
+  <div class="rooms-filters">
 
     <div class="search-field">
       <span class="search-field__icon">⌕</span>
 
-      <input type="text" placeholder="Nome, Andar, Tipo" />
+      <input type="text" placeholder="Código, Tipo" />
     </div>
 
     <select class="filter-select">
       <option>Todos os Tipos</option>
-      <option>Sala de aula</option>
-      <option>Informática</option>
-      <option>Engenharia</option>
-      <option>Maker</option>
-      <option>Laboratório</option>
+      <option>Laboratorio</option>
+      <option>Sala</option>
+      <option>Sala Maker</option>
+      <option>Sala de Reuniao</option>
     </select>
 
     <select class="filter-select">
@@ -54,11 +53,11 @@
 
   <div class="data-table-wrapper">
 
-    <table class="data-table spaces-table">
+    <table class="data-table rooms-table">
 
       <thead>
         <tr>
-          <th>Nome</th>
+          <th>Código</th>
           <th>Andar</th>
           <th>Capacidade</th>
           <th>Tipo</th>
@@ -69,38 +68,40 @@
 
       <tbody>
 
-        @for (space of spaces; track space.name) {
+        @for (room of roomsResponse().content; track room.id) {
 
         <tr>
 
           <td>
-            <div class="space-name">
-              <strong>{{ space.name }}</strong>
-
-              <span>{{ space.description }}</span>
+            <div class="room-name">
+              <strong>{{ room.codigo }}</strong>
             </div>
           </td>
 
           <td>
-            {{ space.floor }}
+            {{ room.andar ?? '—' }}
           </td>
 
           <td>
-            {{ space.capacity }}
+            {{ room.capacidade }}
           </td>
 
           <td>
-            {{ space.type }}
+            {{ room.tipoSala.nome }}
           </td>
 
           <td>
-            <span class="status-badge" [class.status-badge--available]="space.status === 'Disponível'"
-              [class.status-badge--unavailable]="space.status === 'Indisponível'"
-              [class.status-badge--pending]="space.status === 'Pendente'">
+            @if (room.status) {
+            <span class="status-badge" [class.status-badge--available]="room.status === 'Disponível'"
+              [class.status-badge--unavailable]="room.status === 'Indisponível'"
+              [class.status-badge--pending]="room.status === 'Pendente'">
               <span class="status-badge__dot"></span>
 
-              {{ space.status }}
+              {{ room.status }}
             </span>
+            } @else {
+            —
+            }
           </td>
 
           <td>
@@ -124,8 +125,12 @@
   <div class="data-table-footer">
 
     <span>
-      Exibindo 1 a {{ spaces.length }} de {{ spaces.length }}
-      espaços cadastrados
+      @if (roomsResponse().totalElements > 0) {
+      Exibindo 1 a {{ roomsResponse().content.length }} de {{ roomsResponse().totalElements }}
+      salas cadastradas
+      } @else {
+      Nenhuma sala cadastrada
+      }
     </span>
 
     <div class="pagination">
