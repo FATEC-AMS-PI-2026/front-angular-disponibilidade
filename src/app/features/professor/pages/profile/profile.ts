@@ -17,7 +17,6 @@ import {
 
 @Component({
   selector: 'app-profile',
-  standalone: true,
   imports: [
     LucideUserRound,
     LucidePencil,

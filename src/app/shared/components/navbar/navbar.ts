@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { NgOptimizedImage } from '@angular/common';
 import {
   LucideCalendarDays,
   LucideLogOut,
@@ -9,10 +10,10 @@ import {
 
 @Component({
   selector: 'app-navbar',
-  standalone: true,
   imports: [
     RouterLink,
     RouterLinkActive,
+    NgOptimizedImage,
     LucideUserRound,
     LucideCalendarDays,
     LucideLogOut,

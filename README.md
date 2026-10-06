@@ -31,33 +31,40 @@ src/app/
 │   │   └── pages/
 │   │       ├── availability/
 │   │       ├── availability-edit/
+│   │       ├── login/
 │   │       └── profile/
-│   └── coordinator/
-│       ├── data/
-│       │   ├── coordinator-spaces.data.ts
-│       │   └── coordinator-teachers.data.ts
-│       └── pages/
-│           ├── spaces/
-│           └── teachers-availability/
+│   ├── coordinator/
+│   │   ├── data/
+│   │   │   ├── coordinator-spaces.data.ts
+│   │   │   └── coordinator-teachers.data.ts
+│   │   └── pages/
+│   │       ├── login/
+│   │       ├── spaces/
+│   │       └── teachers-availability/
+│   ├── password-reset/
+│   └── profile-select/
 └── shared/
     ├── components/
     │   ├── coordinator-navbar/
     │   ├── navbar/
     │   └── topbar/
-    └── models/
+    ├── models/
+    └── styles/
 ```
 
 **`features/`** — funcionalidades por papel. Cada uma tem:
 
 - `pages/`: uma pasta por rota, em kebab-case (ex.: `availability-edit`), com o `.ts`, o `.html` e o `.scss` no mesmo diretório.
 - `data/`: tipos e dados usados pelas páginas, em arquivos `*.data.ts` (ex.: `professor-availability.data.ts`).
+- Funcionalidades de página única (`profile-select`, `password-reset`) ficam direto na pasta da feature, em kebab-case.
 
 **`shared/`** — código usado por mais de uma área:
 
 - `components/`: `navbar`, `coordinator-navbar` e `topbar`, usados pelo shell.
 - `models/`: modelos compartilhados entre features.
+- `styles/`: parciais SCSS compartilhados (ex.: `_login.scss`, usado pelas telas de login).
 
-Todos os componentes são standalone, com selector `app-*`.
+Todos os componentes são standalone por padrão (Angular 20+), com selector `app-*`.
 
 **Shell** — `src/app/app.ts` e `app.html` montam o layout: a navbar lateral troca entre professor e coordenador conforme a URL, o `topbar` fica fixo no topo e o `<router-outlet>` renderiza a página da rota.
 
@@ -67,14 +74,18 @@ As rotas são definidas em `src/app/app.routes.ts`:
 
 | Rota                           | Página                                   | Carregamento |
 | ------------------------------ | ---------------------------------------- | ------------ |
-| `/`                            | redireciona para `/professor/profile`    | —            |
+| `/`                            | redireciona para `/profile-select`   | —            |
+| `/profile-select`            | escolha do perfil (professor ou coordenador) | lazy         |
+| `/password-reset`            | redefinição de senha                   | lazy         |
+| `/professor/login`           | login do professor                       | lazy         |
 | `/professor/profile`           | perfil do professor                      | lazy         |
 | `/professor/availability`      | disponibilidade do professor             | lazy         |
 | `/professor/availability/edit` | edição da disponibilidade                | lazy         |
 | `/coordinator`                 | redireciona para `/coordinator/teachers` | —            |
+| `/coordinator/login`           | login do coordenador                     | lazy         |
 | `/coordinator/spaces`          | gestão de espaços                        | lazy         |
 | `/coordinator/teachers`        | gestão da disponibilidade dos docentes   | lazy         |
-| `**`                           | redireciona para `/professor/profile`    | —            |
+| `**`                           | redireciona para `/profile-select`   | —            |
 
 **Carregamento** define como o componente da página é obtido: `lazy` significa que a página é baixada só quando a rota é acessada (`loadComponent`), reduzindo o bundle inicial. Todas as rotas de funcionalidades usam `lazy`, seguindo o padrão do projeto.
 

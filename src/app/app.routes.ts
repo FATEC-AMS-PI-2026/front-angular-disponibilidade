@@ -4,18 +4,22 @@ export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'selecionar',
+    redirectTo: 'profile-select',
   },
-    {
-    path: 'selecionar',
-    loadComponent: () => import('./features/selecionar/selecionar').then(component => component.SelecionarComponent),
+  {
+    path: 'profile-select',
+    loadComponent: () => import('./features/profile-select/profile-select').then(component => component.ProfileSelectComponent),
+  },
+  {
+    path: 'password-reset',
+    loadComponent: () => import('./features/password-reset/password-reset').then(component => component.PasswordResetComponent),
   },
   {
     path: 'professor',
     children: [
       {
         path: 'login',
-        loadComponent: () => import('./features/professor/pages/login/login').then(component => component.LoginComponent),
+        loadComponent: () => import('./features/professor/pages/login/login').then(component => component.ProfessorLoginComponent),
       },
       {
         path: 'profile',
@@ -36,7 +40,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'login',
-        loadComponent: () => import('./features/coordinator/pages/login/login').then(component => component.LoginComponent),
+        loadComponent: () => import('./features/coordinator/pages/login/login').then(component => component.CoordinatorLoginComponent),
       },
       {
         path: '',
@@ -55,6 +59,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'selecionar',
+    redirectTo: 'profile-select',
   },
 ];

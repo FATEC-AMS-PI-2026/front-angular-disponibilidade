@@ -1,12 +1,12 @@
 <div class="login-page">
 
   <div class="login-banner">
-    <img src="assets/buildingimage.jpg" alt="Building" />
+    <img ngSrc="assets/buildingimage.jpg" alt="Building" width="474" height="316" />
   </div>
 
   <section class="login-card">
     <div class="login-heading">
-      
+
       <div class="login-icon">
         <svg lucideLogIn [size]="32"></svg>
       </div>
@@ -24,19 +24,17 @@
         <label for="email">
           E-mail
         </label>
-        <input id="email" type="email" placeholder="E-mail"
-        />
+        <input id="email" type="email" placeholder="E-mail" />
       </div>
 
       <div class="input-group">
         <label for="password">
           Senha
         </label>
-        <input id="password" type="password" placeholder="Senha"/>
+        <input id="password" type="password" placeholder="Senha" />
       </div>
 
       <div class="login-options">
-    
 
         <label class="remember-me">
           <input type="checkbox" />
@@ -45,16 +43,17 @@
 
         <span class="forgot-password">
           Esqueceu a senha?
-          <a routerLink="/recuperar-senha">
+          <a routerLink="/password-reset">
             redefinir
           </a>
         </span>
+
       </div>
 
-<button class="login-button"type="button"routerLink="/coordinator/teachers">
-Entrar
-</button>
-
+      <button class="login-button action-button action-button--primary" type="button" routerLink="/coordinator/teachers">
+        Entrar
+      </button>
     </div>
   </section>
+
 </div>

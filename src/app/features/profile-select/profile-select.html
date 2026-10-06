@@ -1,13 +1,13 @@
-<div class="login-page">
+<div class="profile-select-page">
 
-  <div class="login-banner">
-    <img src="assets/buildingimage.jpg" alt="Building" />
+  <div class="profile-select-banner">
+    <img ngSrc="assets/buildingimage.jpg" alt="Building" width="474" height="316" />
   </div>
 
-  <section class="login-card">
-    <div class="login-heading">
+  <section class="profile-select-card">
+    <div class="profile-select-heading">
 
-      <div class="login-icon">
+      <div class="profile-select-icon">
         <svg lucideLogIn [size]="32"></svg>
       </div>
 
@@ -24,16 +24,15 @@
       </button>
 
       <button class="profile-button" type="button" routerLink="/coordinator/login">
-
         <div class="button-content">
-          <svg lucideUserRoundPlus [size]="28"></svg>
+          <svg lucideUserShield [size]="28"></svg>
           <span>Sou Coordenador</span>
         </div>
 
         <svg lucideChevronRight class="arrow" [size]="20">
         </svg>
       </button>
-      
+
     </div>
   </section>
 </div>

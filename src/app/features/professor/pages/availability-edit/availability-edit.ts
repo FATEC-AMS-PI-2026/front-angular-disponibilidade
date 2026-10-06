@@ -19,7 +19,6 @@ import {
 
 @Component({
   selector: 'app-availability-edit',
-  standalone: true,
   imports: [
     RouterLink,
     LucideArrowLeft,

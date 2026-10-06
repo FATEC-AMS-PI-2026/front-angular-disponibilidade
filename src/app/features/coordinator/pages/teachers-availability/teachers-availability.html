@@ -76,7 +76,7 @@
             <div class="teacher">
               <span class="teacher__avatar">
                 @if (teacher.photo) {
-                <img [src]="teacher.photo" [alt]="teacher.name" />
+                <img [ngSrc]="teacher.photo" [alt]="teacher.name" width="44" height="44" />
                 } @else {
                 <svg lucideUserX [size]="18"></svg>
                 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
 import { LucideDownload, LucidePencil, LucideUserX } from '@lucide/angular';
 
 import {
@@ -10,8 +11,8 @@ type WorkloadLevel = 'empty' | 'low' | 'ok' | 'high';
 
 @Component({
   selector: 'app-teachers-availability',
-  standalone: true,
   imports: [
+    NgOptimizedImage,
     LucideDownload,
     LucidePencil,
     LucideUserX,

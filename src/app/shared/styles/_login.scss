@@ -1,0 +1,200 @@
+/* Colors, typography, spacing, radius and motion come from the global styles.scss.
+   The submit button uses the global .action-button .action-button--primary classes. */
+
+:host {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  background: var(--color-surface);
+}
+
+.login-page {
+  display: flex;
+
+  width: 100%;
+  height: 100%;
+
+  font-family: var(--font-family);
+
+  background: var(--color-surface);
+}
+
+.login-icon {
+  display: flex;
+  align-items: center;
+
+  margin-bottom: var(--space-3);
+
+  color: var(--color-primary);
+}
+
+.login-icon svg {
+  width: 32px;
+  height: 32px;
+
+  stroke-width: 1.5;
+}
+
+.login-banner {
+  flex: 1;
+
+  height: 100%;
+}
+
+.login-banner img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.login-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 1;
+
+  padding: var(--space-5);
+}
+
+.login-heading {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-heading h1 {
+  margin: 0 0 var(--space-8);
+
+  color: var(--color-text);
+
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+}
+
+.login-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+
+  margin-bottom: var(--space-1);
+}
+
+.login-title h1 {
+  margin: 0;
+
+  color: var(--color-text);
+
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+}
+
+.login-title span {
+  color: var(--color-primary);
+
+  font-size: var(--font-size-sm);
+}
+
+.login-subtitle {
+  margin: 0 0 var(--space-4);
+
+  color: var(--color-text-secondary);
+
+  font-size: var(--font-size-sm);
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+
+  margin-bottom: var(--space-3);
+}
+
+.input-group label {
+  margin-bottom: var(--space-1);
+
+  color: var(--color-text);
+
+  font-size: var(--font-size-sm);
+}
+
+.input-group input {
+  width: 100%;
+  height: var(--control-height);
+
+  padding: 0 var(--space-3);
+
+  outline: none;
+
+  border: var(--border);
+  border-radius: var(--radius-small);
+
+  color: var(--color-text);
+
+  font-size: var(--font-size-sm);
+}
+
+.input-group input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.input-group input:focus {
+  border-color: var(--color-primary);
+}
+
+.login-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+
+  margin-bottom: var(--space-4);
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+
+  color: var(--color-text);
+
+  font-size: var(--font-size-sm);
+
+  cursor: pointer;
+}
+
+.remember-me input {
+  width: 9px;
+  height: 9px;
+
+  margin: 0;
+}
+
+.forgot-password {
+  color: var(--color-text);
+
+  font-size: var(--font-size-sm);
+}
+
+.forgot-password a {
+  color: var(--color-primary);
+
+  text-decoration: underline;
+
+  cursor: pointer;
+}
+
+/* Full-width variant of the global primary action button */
+
+.login-button {
+  width: 100%;
+
+  justify-content: center;
+}

@@ -8,7 +8,6 @@ import {
 
 @Component({
   selector: 'app-spaces',
-  standalone: true,
   imports: [
     LucideDownload,
     LucidePencil,

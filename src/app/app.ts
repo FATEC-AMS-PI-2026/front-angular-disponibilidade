@@ -7,7 +7,6 @@ import { CoordinatorNavbarComponent } from './shared/components/coordinator-navb
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   imports: [
     RouterOutlet,
     NavbarComponent,
@@ -21,7 +20,7 @@ export class App {
 
   constructor(
     private readonly router: Router,
-  ) {}
+  ) { }
 
   protected get isCoordinator(): boolean {
     return this.router.url.startsWith('/coordinator');

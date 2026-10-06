@@ -1,23 +1,24 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { NgOptimizedImage } from '@angular/common';
 import {
   LucideLogIn,
   LucideUser,
-  LucideUserRoundPlus,
   LucideChevronRight,
+  LucideUserShield,
 } from '@lucide/angular';
 
 @Component({
-  selector: 'app-selecionar',
-  standalone: true,
+  selector: 'app-profile-select',
   imports: [
     RouterLink,
+    NgOptimizedImage,
     LucideLogIn,
     LucideUser,
-    LucideUserRoundPlus,
+    LucideUserShield,
     LucideChevronRight,
   ],
-  templateUrl: './selecionar.html',
-  styleUrl: './selecionar.scss',
+  templateUrl: './profile-select.html',
+  styleUrl: './profile-select.scss',
 })
-export class SelecionarComponent {}
+export class ProfileSelectComponent {}
