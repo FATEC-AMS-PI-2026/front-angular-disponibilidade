@@ -1,0 +1,39 @@
+<div class="login-page">
+
+  <div class="login-banner">
+    <img src="assets/buildingimage.jpg" alt="Building" />
+  </div>
+
+  <section class="login-card">
+    <div class="login-heading">
+
+      <div class="login-icon">
+        <svg lucideLogIn [size]="32"></svg>
+      </div>
+
+      <h1>Escolha seu perfil</h1>
+
+      <button class="profile-button" type="button" routerLink="/professor/login">
+        <div class="button-content">
+          <svg lucideUser [size]="28"></svg>
+          <span>Sou Professor</span>
+        </div>
+
+        <svg lucideChevronRight class="arrow" [size]="20">
+        </svg>
+      </button>
+
+      <button class="profile-button" type="button" routerLink="/coordinator/login">
+
+        <div class="button-content">
+          <svg lucideUserRoundPlus [size]="28"></svg>
+          <span>Sou Coordenador</span>
+        </div>
+
+        <svg lucideChevronRight class="arrow" [size]="20">
+        </svg>
+      </button>
+      
+    </div>
+  </section>
+</div>
