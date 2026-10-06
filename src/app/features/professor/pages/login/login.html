@@ -1,0 +1,59 @@
+<div class="login-page">
+
+  <section class="login-card">
+    <div class="login-heading">
+
+      <div class="login-icon">
+        <svg lucideLogIn [size]="32"></svg>
+      </div>
+
+      <div class="login-title">
+        <h1>Entrar na sua conta</h1>
+        <span>Professor</span>
+      </div>
+
+      <p class="login-subtitle">
+        Bem vindo! insira seus dados abaixo para entrar na sua conta
+      </p>
+
+      <div class="input-group">
+        <label for="email">
+          E-mail
+        </label>
+        <input id="email"type="email"placeholder="E-mail"/>
+      </div>
+
+      <div class="input-group">
+        <label for="password">
+          Senha
+        </label>
+        <input id="password"type="password"placeholder="Senha"/>
+      </div>
+
+      <div class="login-options">
+
+        <label class="remember-me">
+          <input type="checkbox" />
+          <span>Lembre-se de mim</span>
+        </label>
+
+        <span class="forgot-password">
+          Esqueceu a senha?
+          <a routerLink="/recuperar-senha">
+            redefinir
+          </a>
+        </span>
+
+      </div>
+
+      <button class="login-button"type="button"routerLink="/professor/profile">
+        Entrar
+      </button>
+    </div>
+  </section>
+
+  <div class="login-banner">
+    <img src="assets/buildingimage.jpg" alt="Building" />
+  </div>
+
+</div>
