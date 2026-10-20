@@ -1,0 +1,44 @@
+<section class="schedule-page" aria-labelledby="schedule-title">
+  <header class="schedule-heading">
+    <h1 id="schedule-title">Cronograma 2026.1</h1>
+    <svg lucideCalendarDays class="calendar-icon" [size]="26" [strokeWidth]="2.2" aria-hidden="true"></svg>
+  </header>
+
+  <article class="schedule-card">
+    <div class="timeline" aria-label="Etapas do cronograma">
+      @for (step of steps; track step.title; let last = $last) {
+        <div class="timeline-step" [class.timeline-step--done]="step.status === 'done'"
+          [class.timeline-step--current]="step.status === 'current'"
+          [class.timeline-step--upcoming]="step.status === 'upcoming'">
+          <div class="timeline-marker">
+            @if (step.icon === 'check') {
+              @if (step.status === 'done') {
+                <svg lucideCheck [size]="18" [strokeWidth]="2.5" aria-hidden="true"></svg>
+              } @else {
+                <span class="current-dot"></span>
+              }
+            } @else if (step.icon === 'lock') {
+              <svg lucideLockKeyhole [size]="18" [strokeWidth]="2" aria-hidden="true"></svg>
+            } @else {
+              <svg lucideGlobe [size]="18" [strokeWidth]="2" aria-hidden="true"></svg>
+            }
+          </div>
+          <div class="timeline-copy">
+            <h2>{{ step.title }}</h2>
+            <p>{{ step.subtitle }}</p>
+          </div>
+        </div>
+      }
+    </div>
+
+    <section class="readiness" aria-label="Índice de prontidão">
+      <div class="readiness-ring" role="img" aria-label="82 por cento de prontidão">
+        <div class="readiness-ring__inner">82%</div>
+      </div>
+      <div class="readiness-copy">
+        <h2>Índice de Prontidão</h2>
+        <p>4 de 6 grades validadas sem pendências regulatórias.</p>
+      </div>
+    </section>
+  </article>
+</section>

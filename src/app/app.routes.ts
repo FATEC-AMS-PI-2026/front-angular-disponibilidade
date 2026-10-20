@@ -2,6 +2,10 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
+    path: 'cronograma',
+    loadComponent: () => import('./features/cronograma/cronograma').then(component => component.CronogramaComponent),
+  },
+  {
     path: '',
     pathMatch: 'full',
     redirectTo: 'profile-select',

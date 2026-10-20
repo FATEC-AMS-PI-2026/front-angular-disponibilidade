@@ -1,0 +1,247 @@
+:host {
+  display: block;
+  color: #12243b;
+}
+
+.schedule-page {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 14px 12px 24px;
+  box-sizing: border-box;
+}
+
+.schedule-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 2px 18px;
+
+  h1 {
+    margin: 0;
+    color: #102238;
+    font-size: clamp(22px, 3vw, 28px);
+    line-height: 1.25;
+    font-weight: 700;
+    letter-spacing: -0.45px;
+  }
+
+  .calendar-icon {
+    flex: 0 0 auto;
+    color: #737984;
+  }
+}
+
+.schedule-card {
+  min-height: 615px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 28px 30px 30px;
+  border-radius: 20px;
+  background: #f6f6f7;
+}
+
+.timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 23px;
+  padding-bottom: 24px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 17px;
+    top: 20px;
+    bottom: 45px;
+    width: 2px;
+    background: #dce7ff;
+  }
+}
+
+.timeline-step {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  align-items: start;
+  column-gap: 18px;
+  min-height: 48px;
+}
+
+.timeline-marker {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border-radius: 50%;
+  color: #4b5563;
+  background: #e5edfb;
+}
+
+.timeline-step--done .timeline-marker {
+  color: #062f29;
+  background: #10bd89;
+}
+
+.timeline-step--current .timeline-marker {
+  width: 42px;
+  height: 42px;
+  margin: -3px;
+  color: #fff;
+  border: 7px solid #dbe6ff;
+  background: #4d7cff;
+  box-shadow: 0 0 0 1px #dbe6ff;
+}
+
+.current-dot {
+  width: 12px;
+  height: 12px;
+  display: block;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.timeline-copy {
+  padding-top: 2px;
+
+  h2 {
+    margin: 0 0 3px;
+    color: #13253c;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: -0.2px;
+  }
+
+  p {
+    margin: 0;
+    color: #777b84;
+    font-size: 17px;
+    line-height: 1.35;
+  }
+}
+
+.timeline-step--current .timeline-copy h2 {
+  color: #4b7dff;
+}
+
+.timeline-step--done .timeline-copy p {
+  color: #515761;
+}
+
+.readiness {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 20px;
+  min-height: 130px;
+  box-sizing: border-box;
+  border-radius: 20px;
+  background: #edf2ff;
+}
+
+.readiness-ring {
+  flex: 0 0 92px;
+  width: 92px;
+  height: 92px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: conic-gradient(#4b7cff 0deg 295.2deg, #d4e0ff 295.2deg 360deg);
+  transform: rotate(-90deg);
+}
+
+.readiness-ring__inner {
+  width: 74px;
+  height: 74px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #edf2ff;
+  color: #142840;
+  font-size: 20px;
+  font-weight: 700;
+  transform: rotate(90deg);
+}
+
+.readiness-copy {
+  min-width: 0;
+
+  h2 {
+    margin: 0 0 3px;
+    color: #13253c;
+    font-size: 21px;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  p {
+    max-width: 420px;
+    margin: 0;
+    color: #515761;
+    font-size: 17px;
+    line-height: 1.4;
+  }
+}
+
+@media (max-width: 600px) {
+  .schedule-page {
+    padding: 14px 10px 20px;
+  }
+
+  .schedule-card {
+    min-height: 600px;
+    padding: 24px 16px 18px;
+    border-radius: 16px;
+  }
+
+  .timeline {
+    gap: 22px;
+  }
+
+  .timeline-step {
+    grid-template-columns: 36px minmax(0, 1fr);
+    column-gap: 13px;
+  }
+
+  .timeline-copy h2 {
+    font-size: 17px;
+  }
+
+  .timeline-copy p {
+    font-size: 15px;
+  }
+
+  .readiness {
+    gap: 14px;
+    padding: 16px 12px;
+    min-height: 112px;
+    border-radius: 16px;
+  }
+
+  .readiness-ring {
+    flex-basis: 72px;
+    width: 72px;
+    height: 72px;
+  }
+
+  .readiness-ring__inner {
+    width: 58px;
+    height: 58px;
+    font-size: 17px;
+  }
+
+  .readiness-copy h2 {
+    font-size: 17px;
+  }
+
+  .readiness-copy p {
+    font-size: 14px;
+  }
+}
