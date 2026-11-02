@@ -1,0 +1,76 @@
+<div class="dashboard-cards">
+  <div class="card">
+
+    <div class="card-header">
+      <span>Docentes Ativos</span>
+      <i class="pi pi-users icon-blue"></i>
+    </div>
+
+    <div class="card-value">
+      {{ dashboard.docentesAtivos }}
+    </div>
+
+    <div class="card-bottom">
+      <div class="progress-bar">
+        <div
+          class="progress-fill blue"
+          [style.width.%]="
+            (dashboard.disponibilidadesPreenchidas /
+            dashboard.totalDocentes) * 100">
+        </div>
+      </div>
+      
+      <div class="card-footer">
+        <span>Disponibilidades preenchidas</span>
+        <span>
+          {{ dashboard.disponibilidadesPreenchidas }}
+          / {{ dashboard.totalDocentes }}
+        </span>
+      </div>
+
+    </div>
+
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <span>Conflitos Pendentes</span>
+      <i class="pi pi-exclamation-circle icon-red"></i>
+    </div>
+    <div class="card-value">
+      {{ dashboard.conflitosPendentes }}
+    </div>
+    <div class="conflicts">
+      @for (conflito of dashboard.conflitos; track conflito) {
+        <div class="conflict-item">
+          1 • {{ conflito }}
+        </div>}
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span>Grades finalizadas</span>
+      <i class="pi pi-clock icon-green"></i>
+    </div>
+    <div class="card-value">{{ dashboard.gradesFinalizadas }} / {{ dashboard.totalGrades }}
+    </div>
+
+    <div class="card-bottom">
+
+      <div class="progress-bar">
+        <div
+          class="progress-fill green"
+          [style.width.%]="
+            (dashboard.gradesFinalizadas /
+            dashboard.totalGrades) * 100">
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <span>Meta de publicação</span>
+        <span>{{ dashboard.dataPublicacao }}</span>
+      </div>
+    </div>
+
+  </div>
+</div>

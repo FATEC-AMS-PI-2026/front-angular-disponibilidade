@@ -43,9 +43,8 @@ export const routes: Routes = [
         loadComponent: () => import('./features/coordinator/pages/login/login').then(component => component.CoordinatorLoginComponent),
       },
       {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'teachers',
+        path: 'home',
+        loadComponent: () => import('./features/coordinator/pages/home/home').then(component => component.HomeComponent),
       },
       {
         path: 'rooms',
