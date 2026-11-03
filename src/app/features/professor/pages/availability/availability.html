@@ -1,42 +1,68 @@
 <div class="availability-page">
 
-  <section class="availability-card availability-card--header">
+  <section class="availability-header">
 
-    <div class="availability-heading">
+    <div class="availability-header__main">
 
-      <h1>Minha disponibilidade</h1>
+      <div class="availability-heading">
 
-      <p>
-        Horários consolidados para atribuição e montagem de grade semestral.
-      </p>
+        <h1>Minha disponibilidade</h1>
+
+        <p>
+          Disponibilidade geral do professor para o semestre, usada no
+          planejamento das aulas.
+        </p>
+
+      </div>
+
+
+      <div class="availability-information">
+
+        <span>
+          <svg lucideCalendarDays [size]="11"></svg>
+
+          <strong>Semestre:</strong>
+          {{ availability().semester }}
+        </span>
+
+        <span>
+          <svg lucideClock3 [size]="11"></svg>
+
+          <strong>Turnos:</strong>
+          {{ selectedShifts.join(' • ') }}
+        </span>
+
+        <span>
+          <svg lucideCalendarClock [size]="11"></svg>
+
+          <strong>Prazo:</strong>
+          {{ deadline.label }}
+        </span>
+
+        <span>
+          <svg lucideUserRound [size]="11"></svg>
+
+          <strong>Coordenador:</strong>
+          {{ availability().coordinator }}
+        </span>
+
+        <span>
+          <svg lucideBuilding2 [size]="11"></svg>
+
+          <strong>Ambiente:</strong>
+          Fatec Dom Amaury Castanho
+        </span>
+
+      </div>
 
     </div>
 
 
-    <div class="availability-information">
+    <a class="action-button action-button--primary" routerLink="/professor/availability/edit">
+      <svg lucidePencil [size]="12"></svg>
 
-      <span>
-        <svg lucideCalendarDays [size]="11"></svg>
-
-        <strong>Turno:</strong>
-        {{ availability.semester }}
-      </span>
-
-      <span>
-        <svg lucideUserRound [size]="11"></svg>
-
-        <strong>Coordenador:</strong>
-        {{ availability.coordinator }}
-      </span>
-
-      <span>
-        <svg lucideBuilding2 [size]="11"></svg>
-
-        <strong>Ambiente:</strong>
-        Fatec Dom Amaury Castanho
-      </span>
-
-    </div>
+      Editar disponibilidade
+    </a>
 
   </section>
 
@@ -47,76 +73,208 @@
 
       <div>
 
-        <h2>Horários Cadastrados na Semana</h2>
+        <h2>Disponibilidade semanal</h2>
 
         <p>
-          Visualização resumida dos períodos e restrições acordadas.
+          Horários disponíveis e negociáveis para o semestre.
         </p>
 
       </div>
 
-      <button class="edit-button" type="button" routerLink="/professor/availability/edit">
-        <svg lucidePencil [size]="12"></svg>
+      <div class="availability-legend" aria-label="Legenda de status">
 
-        Editar disponibilidade
-      </button>
+        <span>
+          <i class="availability-legend__dot availability-legend__dot--available"></i>
+          Disponível
+        </span>
+
+        <span>
+          <i class="availability-legend__dot availability-legend__dot--negotiable"></i>
+          Negociável
+        </span>
+
+      </div>
+
+    </div>
+
+    <div class="filter-bar">
+      <div class="filter-bar__field">
+        <span class="filter-bar__label">Semestre</span>
+        <select class="filter-select" aria-label="Semestre da disponibilidade"
+          [value]="viewingPrevious() ? 'previous' : 'current'" (change)="selectSemester($event)">
+          <option value="current">Atual · {{ currentSemester }}</option>
+          <option value="previous">Anterior · {{ previousSemester }}</option>
+        </select>
+      </div>
+
+      @if (viewingPrevious()) {
+      <span class="status-badge status-badge--available">
+        <span class="status-badge__dot"></span>
+        Aprovada
+      </span>
+      } @else {
+      <span class="status-badge" [class]="getReviewStatusClass(reviewStatus())">
+        <span class="status-badge__dot"></span>
+        {{ reviewStatus() }}
+      </span>
+      }
+    </div>
+
+    @if (viewingPrevious()) {
+    <p class="review-note availability-history-note" role="note">
+      Exemplo fictício da disponibilidade do semestre anterior.
+    </p>
+    }
+
+
+    <div class="availability-summary" aria-label="Resumo da disponibilidade">
+
+      <div class="summary-stat summary-stat--available">
+        <span>Horas disponíveis</span>
+        <strong>{{ availableHours() }}</strong>
+      </div>
+
+      <div class="summary-stat summary-stat--negotiable">
+        <span>Horários negociáveis</span>
+        <strong>{{ negotiableCount() }}</strong>
+      </div>
+
+      <div class="summary-stat">
+        <span>Dias com disponibilidade</span>
+        <strong>{{ availableDays() }}</strong>
+      </div>
 
     </div>
 
 
-    <div class="availability-status">
+    @if (visibleDays().length) {
+    <div class="availability-grid">
+      @for (day of visibleDays(); track day.day) {
+      <article class="day-card">
+        <div class="day-card__header">
+          <h3>{{ day.day }}</h3>
+          <span class="day-card__count">
+            {{ day.slots.length }} {{ day.slots.length === 1 ? 'horário' : 'horários' }}
+          </span>
+        </div>
 
-      <span>Status da grade</span>
+        <div class="day-card__slots">
+          @for (slot of day.slots; track slot.startTime) {
+          <div class="availability-slot" [class]="getStatusClass(slot.status)">
+            <span>{{ slot.shift }} • {{ slot.startTime }} - {{ slot.endTime }}</span>
+            <span class="availability-slot__status">
+              <span class="availability-slot__dot"></span>
+              {{ slot.status }}
+            </span>
+          </div>
+          }
+        </div>
+      </article>
+      }
+    </div>
+    } @else {
+    <p class="review-empty">
+      @if (selectedShifts.length) {
+      Nenhum horário disponível ou negociável nos turnos selecionados.
+      } @else {
+      Selecione ao menos um turno para visualizar os horários.
+      }
+    </p>
+    }
 
-      <span class="status-badge">
+  </section>
 
+
+  @if (!viewingPrevious()) {
+  <section class="availability-card review-card">
+
+    <div class="availability-section-header">
+
+      <div>
+
+        <h2>Revisão do coordenador</h2>
+
+        <p>
+          Revise a proposta do coordenador e aprove ou solicite um ajuste.
+        </p>
+
+      </div>
+
+      <span class="status-badge" [class]="getReviewStatusClass(reviewStatus())">
         <span class="status-badge__dot"></span>
 
-        {{ availability.scheduleStatus }}
-
+        {{ reviewStatus() }}
       </span>
 
     </div>
 
 
-    <div class="availability-grid">
+    @if (messages().length) {
+    <ul class="review-thread" aria-label="Histórico da revisão">
+      @for (message of messages(); track $index) {
+      <li class="review-message" [class.review-message--mine]="message.author === 'Professor'">
+        <div class="review-message__meta">
+          <strong>{{ message.author }}</strong>
 
-      @for (day of availability.days; track day.day) {
-
-      <article class="day-card">
-
-        <h3>{{ day.day }}</h3>
-
-        <div class="day-card__slots">
-
-          @for (slot of day.slots; track slot.startTime) {
-
-          <div class="availability-slot" [class]="getStatusClass(slot.status)">
-
-            <span>
-              {{ slot.startTime }} - {{ slot.endTime }}
-            </span>
-
-            <span class="availability-slot__status">
-
-              <span class="availability-slot__dot"></span>
-
-              {{ slot.status }}
-
-            </span>
-
-          </div>
-
-          }
-
+          <span>{{ message.time }}</span>
         </div>
 
-      </article>
-
+        <p>{{ message.text }}</p>
+      </li>
       }
+    </ul>
+    } @else {
+    <p class="review-empty">
+      Nenhuma mensagem do coordenador até o momento.
+    </p>
+    }
 
+
+    @if (reviewStatus() === 'Aguardando professor') {
+
+    <div class="review-composer">
+      <label class="review-composer__label" for="professor-reply">
+        Sua resposta
+      </label>
+
+      <textarea id="professor-reply" class="review-composer__input" rows="3"
+        placeholder="Explique os ajustes que você pode fazer ou aceite a revisão..." [value]="reply()"
+        (input)="onReplyInput($event)"></textarea>
+
+      <div class="review-composer__actions">
+        <span class="review-composer__hint">
+          Se não concordar com a proposta, descreva o ajuste necessário.
+        </span>
+
+        <div class="review-composer__buttons">
+          <button class="action-button" type="button" [disabled]="!reply().trim()" (click)="sendReply()">
+            <svg lucideSend [size]="12"></svg>
+            Solicitar ajuste
+          </button>
+
+          <button class="action-button action-button--primary" type="button" (click)="acceptRevision()">
+            <svg lucideCheckCheck [size]="12"></svg>
+            Aprovar revisão
+          </button>
+        </div>
+      </div>
     </div>
 
+    } @else if (reviewStatus() === 'Aguardando coordenador') {
+    <p class="review-note">
+      Resposta enviada. Aguardando a análise do coordenador.
+    </p>
+    } @else if (reviewStatus() === 'Aprovada') {
+    <p class="review-note review-note--approved">
+      Você aprovou a revisão da sua disponibilidade.
+    </p>
+    } @else {
+    <p class="review-note">
+      Nenhuma solicitação de revisão no momento.
+    </p>
+    }
+
   </section>
+  }
 
 </div>

@@ -14,19 +14,11 @@
       </div>
 
       <div class="availability-information">
-
-        <span>
-          <svg lucideClock3 [size]="11"></svg>
-
-          <strong>Turno:</strong>
-          AMS
-        </span>
-
         <span>
           <svg lucideUserRound [size]="11"></svg>
 
           <strong>Coordenador:</strong>
-          Tadeu Maffeis
+          Tadeu Maffei
         </span>
 
         <span>
@@ -44,15 +36,15 @@
 
       <span class="deadline">
         <svg lucideCalendarClock [size]="12"></svg>
-        Prazo Máximo: 30 de Junho
+        Prazo para envio: {{ deadline.label }}
       </span>
 
-      <button class="action-button" type="button">
+      <button class="action-button" type="button" disabled>
         <svg lucideSave [size]="12"></svg>
         Salvar rascunho
       </button>
 
-      <button class="action-button action-button--primary" type="button" (click)="save()">
+      <button class="action-button action-button--primary" type="button" disabled>
         <svg lucideCheck [size]="12"></svg>
         Finalizar
       </button>
@@ -62,39 +54,35 @@
   </section>
 
 
-  <section class="minimum-hours">
+  <section class="availability-summary">
 
-    <div class="minimum-hours__header">
+    <div class="availability-summary__header">
 
-      <strong>
-        Faltam 3 Horas para chegar ao Mínimo
-      </strong>
+      <div aria-live="polite">
+        <strong>{{ availableHours() }} disponíveis</strong>
 
-      <span>
-        Acrescente mais horários para preencher o mínimo de horas exigidas
+        <span>
+          Somente horários marcados como Disponível entram na contagem.
+        </span>
+      </div>
+
+      <span class="availability-summary__limit">
+        {{ maximumHours }}h máx.
       </span>
 
     </div>
 
-    <div class="minimum-hours__progress">
-
+    <div class="availability-summary__progress">
       <div class="progress-track">
-        <div class="progress-value"></div>
+        <div class="progress-value" [style.width.%]="availablePercent()"></div>
       </div>
-
-      <div class="progress-label progress-label--minimum">
-        <strong>4h</strong>
-        <span>Min</span>
-      </div>
-
-      <div class="progress-label progress-label--maximum">
-        <strong>9h</strong>
-        <span>Max</span>
-      </div>
-
     </div>
 
   </section>
+
+  <p class="review-note" role="note">
+    Se você não cadastrar uma nova disponibilidade, usaremos a do semestre anterior, se houver.
+  </p>
 
 
   <section class="availability-section">
@@ -105,8 +93,22 @@
         <h2>Disponibilidade semanal</h2>
 
         <p>
-          Selecione os horários de acordo com sua disponibilidade.
+          Clique nos horários para alternar entre Disponível, Negociável e
+          Indisponível.
         </p>
+
+        <div class="shift-selection" role="group" aria-labelledby="shift-selection-label">
+          <strong class="shift-selection__title" id="shift-selection-label">Posso dar aula em</strong>
+          <div class="shift-selection__options">
+            @for (shift of shifts; track shift) {
+            <label>
+              <input type="checkbox" [checked]="selectedShifts().includes(shift)"
+                (change)="onShiftToggle(shift, $event)" />
+              {{ shift }}
+            </label>
+            }
+          </div>
+        </div>
       </div>
 
       <div class="availability-legend">
@@ -131,62 +133,46 @@
     </div>
 
 
-    <div class="time-grid-table-wrapper">
+    @for (schedule of shiftSchedules(); track schedule.shift) {
+    <section class="shift-schedule" [attr.aria-label]="'Turno ' + schedule.shift">
+      <h3>{{ schedule.shift }}</h3>
 
-      <table class="time-grid-table">
+      <div class="time-grid-table-wrapper">
+        <table class="time-grid-table">
+          <thead>
+            <tr>
+              <th class="time-grid-table__time-header">Hora / Dia</th>
+              @for (day of schedule.days; track day.day) {
+              <th>{{ day.day }}</th>
+              }
+            </tr>
+          </thead>
 
-        <thead>
-          <tr>
-
-            <th class="time-grid-table__time-header">
-              Hora / Dia
-            </th>
-
-            @for (day of days; track day.day) {
-            <th>{{ day.day }}</th>
+          <tbody>
+            @for (timeSlot of schedule.days[0].slots; track timeSlot.id; let slotIndex = $index) {
+            <tr>
+              <td class="time-grid-table__time">
+                {{ timeSlot.startTime }} - {{ timeSlot.endTime }}
+              </td>
+              @for (day of schedule.days; track day.day) {
+              @let slot = day.slots[slotIndex];
+              <td>
+                <button type="button" class="availability-slot" [class]="getStatusClass(slot.status)"
+                  (click)="changeStatus(slot.id)" [attr.aria-label]="
+                    day.day + ', ' + slot.startTime + ' às ' + slot.endTime +
+                    ': ' + slot.status + '. Clique para alterar o status.'
+                  ">
+                  <span class="availability-slot__status">{{ slot.status }}</span>
+                </button>
+              </td>
+              }
+            </tr>
             }
-
-          </tr>
-        </thead>
-
-        <tbody>
-
-          @for (slotIndex of [0, 1, 2]; track slotIndex) {
-
-          <tr>
-
-            <td class="time-grid-table__time">
-              {{ days[0].slots[slotIndex].startTime }}
-              -
-              {{ days[0].slots[slotIndex].endTime }}
-            </td>
-
-            @for (day of days; track day.day) {
-
-            @let slot = day.slots[slotIndex];
-
-            <td>
-
-              <button type="button" class="availability-slot" [class]="getStatusClass(slot.status)"
-                (click)="changeStatus(slot)">
-                <span class="availability-slot__status">
-                  {{ slot.status }}
-                </span>
-              </button>
-
-            </td>
-
-            }
-
-          </tr>
-
-          }
-
-        </tbody>
-
-      </table>
-
-    </div>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    }
 
   </section>
 
