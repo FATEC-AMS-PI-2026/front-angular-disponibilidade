@@ -21,7 +21,7 @@
   /* Colors: text */
   --color-text: #222222;
   --color-text-secondary: #666666;
-  --color-text-muted: #8a8a8a;
+  --color-text-muted: #6f6f6f;
   --color-on-solid: #111111;
 
   /* Colors: borders */
@@ -29,13 +29,13 @@
   --color-border-light: #e8e8e8;
 
   /* Colors: feedback */
-  --color-success: #16a34a;
+  --color-success: #15803d;
   --color-success-background: #dcfce7;
 
-  --color-danger: #dc2626;
+  --color-danger: #b91c1c;
   --color-danger-background: #fee2e2;
 
-  --color-info: #2563eb;
+  --color-info: #1d4ed8;
   --color-info-background: #dbeafe;
 
   --color-warning: #f5b93f;
@@ -46,7 +46,7 @@
   --color-available-solid: #43c46b;
 
   --color-negotiable-soft-bg: #ffe3a8;
-  --color-negotiable-soft-text: #956000;
+  --color-negotiable-soft-text: #8a5500;
   --color-negotiable-solid: #ffc34d;
 
   --color-track: #dedede;
@@ -84,6 +84,7 @@
   --font-size-lg: 16px;
   --font-size-xl: 18px;
   --font-size-2xl: 22px;
+  --font-size-4xl: 40px;
 
   /* Motion */
   --transition-fast: 0.15s ease;
@@ -155,6 +156,16 @@ a {
   text-decoration: none;
 }
 
+/* Visible focus ring for keyboard users on every interactive element. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
 /* ==========================================================================
    SHARED: Buttons
    ========================================================================== */
@@ -195,6 +206,15 @@ a {
 .action-button:active,
 .edit-button:active {
   transform: translateY(1px);
+}
+
+.action-button:disabled,
+.edit-button:disabled {
+  filter: none;
+  opacity: 0.55;
+
+  cursor: not-allowed;
+  transform: none;
 }
 
 .action-button--primary,
@@ -275,9 +295,229 @@ a {
   color: var(--color-info);
 }
 
+.status-badge--warning {
+  background: var(--color-negotiable-soft-bg);
+  color: var(--color-negotiable-soft-text);
+}
+
+/* ==========================================================================
+   SHARED: Review negotiation (thread + composer)
+   ========================================================================== */
+
+.review-thread {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.review-message {
+  align-self: flex-start;
+
+  max-width: 80%;
+  padding: var(--space-3);
+
+  border-radius: var(--radius);
+  background: var(--color-surface-muted);
+}
+
+.review-message--mine {
+  align-self: flex-end;
+
+  background: var(--color-primary-light);
+}
+
+.review-message__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+
+  margin-bottom: var(--space-1);
+
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-2xs);
+}
+
+.review-message__meta strong {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.review-message p {
+  margin: 0;
+
+  color: var(--color-text);
+
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.review-empty {
+  margin: 0;
+
+  padding: var(--space-4);
+
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-small);
+
+  color: var(--color-text-muted);
+
+  font-size: var(--font-size-sm);
+  text-align: center;
+}
+
+.review-note {
+  margin: 0;
+
+  padding: var(--space-3) var(--space-4);
+
+  border-radius: var(--radius-small);
+
+  background: var(--color-info-background);
+  color: var(--color-info);
+
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+}
+
+.review-note--approved {
+  background: var(--color-success-background);
+  color: var(--color-success);
+}
+
+.review-composer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+
+  padding-top: var(--space-4);
+
+  border-top: var(--border-light);
+}
+
+.review-composer__label {
+  color: var(--color-text);
+
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+}
+
+.review-composer__input {
+  min-height: 84px;
+  padding: var(--space-3);
+
+  border: var(--border);
+  border-radius: var(--radius-small);
+
+  background: var(--color-surface);
+  color: var(--color-text);
+
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+
+  resize: vertical;
+
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.review-composer__input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.review-composer__input:focus {
+  border-color: var(--color-primary);
+  outline: 0;
+
+  box-shadow: 0 0 0 2px var(--color-primary-light);
+}
+
+.review-composer__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.review-composer__hint {
+  color: var(--color-text-muted);
+
+  font-size: var(--font-size-xs);
+}
+
+.review-composer__buttons {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+
+  margin-left: auto;
+}
+
+@media (max-width: 900px) {
+  .review-composer__actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .review-composer__buttons {
+    align-items: stretch;
+    flex-direction: column;
+
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .review-composer__buttons .action-button {
+    justify-content: center;
+  }
+}
+
 /* ==========================================================================
    SHARED: Information row (icon + label + value)
    ========================================================================== */
+
+.availability-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.availability-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+.availability-legend__dot {
+  width: var(--dot-size);
+  height: var(--dot-size);
+
+  border-radius: 50%;
+}
+
+.availability-legend__dot--available {
+  background: var(--color-available-solid);
+}
+
+.availability-legend__dot--negotiable {
+  background: var(--color-negotiable-solid);
+}
+
+.availability-legend__dot--unavailable {
+  background: var(--color-disabled);
+}
 
 .availability-information {
   display: flex;
@@ -304,6 +544,143 @@ a {
 .availability-information strong {
   color: var(--color-text);
   font-weight: 500;
+}
+
+.filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+
+  margin-top: var(--space-4);
+  padding: var(--space-4);
+
+  background: var(--color-primary-light);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-small);
+  box-shadow: inset 3px 0 var(--color-primary);
+}
+
+.filter-bar__field {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+}
+
+.filter-bar__label {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+}
+
+.filter-bar__value {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--control-height-sm);
+  padding: 0 var(--space-3);
+
+  background: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius-small);
+
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+}
+
+.filter-bar .filter-select {
+  min-width: 250px;
+  border-color: var(--color-primary);
+  color: var(--color-text);
+}
+
+.filter-bar__segments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.filter-bar__segments .action-button {
+  min-height: var(--control-height-sm);
+  padding: 0 var(--space-3);
+
+  background: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius-small);
+  color: var(--color-text-secondary);
+}
+
+.filter-bar__segments .action-button.action-button--primary {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+/* ==========================================================================
+   SHARED: Deadline card
+   ========================================================================== */
+
+.deadline-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--card-padding);
+  background: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius);
+
+  box-shadow: var(--shadow-card);
+}
+
+.deadline-card__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.deadline-card__label {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-2xs);
+  font-weight: 500;
+}
+
+.deadline-card__input {
+  height: var(--control-height);
+  padding: 0 var(--space-3);
+  border: var(--border);
+  border-radius: var(--radius-small);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+}
+
+.deadline-card__input:focus {
+  border-color: var(--color-primary);
+  outline: 0;
+  box-shadow: 0 0 0 2px var(--color-primary-light);
+}
+
+/* ==========================================================================
+   SHARED: Shift pills
+   ========================================================================== */
+
+.shift-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.shift-pill {
+  padding: 2px var(--space-2);
+
+  border-radius: var(--radius-pill);
+
+  background: var(--color-surface-muted);
+  color: var(--color-text-secondary);
+
+  font-size: var(--font-size-xs);
 }
 
 /* ==========================================================================
@@ -372,8 +749,12 @@ a {
    SHARED: Data table
    ========================================================================== */
 
+.data-table-section {
+  display: flex;
+  flex-direction: column;
+}
+
 .data-table-wrapper {
-  min-height: calc(var(--table-header-height) + 7 * var(--table-list-row-height));
   overflow-x: auto;
 
   background: var(--color-surface);
