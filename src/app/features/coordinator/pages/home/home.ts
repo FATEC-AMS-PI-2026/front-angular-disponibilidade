@@ -1,28 +1,85 @@
-import { Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+} from '@angular/core';
+import { RouterLink } from '@angular/router';
+import {
+  LucideArrowRight,
+  LucideCalendarClock,
+  LucideCheckCheck,
+  LucideClipboardList,
+  LucideUsers,
+} from '@lucide/angular';
+import { AvailabilityDeadlineService } from '../../../../shared/services/availability-deadline.service';
+
+type PendingReviewStatus =
+  | 'Pendente'
+  | 'Aguardando coordenador';
+
+interface PendingReview {
+  teacherId: number;
+  name: string;
+  city: string;
+  email: string;
+  status: PendingReviewStatus;
+  message?: string;
+}
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [
+    RouterLink,
+    LucideArrowRight,
+    LucideCalendarClock,
+    LucideCheckCheck,
+    LucideClipboardList,
+    LucideUsers,
+  ],
   templateUrl: './home.html',
-  styleUrl: './home.scss'
+  styleUrl: './home.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
+  protected readonly deadline = inject(AvailabilityDeadlineService).deadline;
 
-  dashboard = {
-    docentesAtivos: 28,
-    disponibilidadesPreenchidas: 26,
-    totalDocentes: 28,
+  protected readonly activeTeachers = 5;
+  protected readonly totalTeachers = 7;
+  protected readonly activePercent = Math.round(
+    (this.activeTeachers / this.totalTeachers) * 100,
+  );
 
-    conflitosPendentes: 3,
-    conflitos: [
-      'Conflito de sala',
-      'Conflito de interjornada',
-      'Conflito de carga horária'
-    ],
+  protected readonly approvedReviews = 2;
+  protected readonly inNegotiation = 1;
 
-    gradesFinalizadas: 4,
-    totalGrades: 6,
-    dataPublicacao: '30/06/2026'
-  };
+  protected readonly pendingReviews: PendingReview[] = [
+    {
+      teacherId: 1,
+      name: 'Carlos',
+      city: 'Sorocaba',
+      email: 'carlos@cps.sp.gov.br',
+      status: 'Pendente',
+    },
+    {
+      teacherId: 4,
+      name: 'Mariana',
+      city: 'Sorocaba',
+      email: 'mariana@cps.sp.gov.br',
+      status: 'Aguardando coordenador',
+      message: 'Consigo ajustar terça-feira, mas preciso manter quinta às 17:00.',
+    },
+    {
+      teacherId: 2,
+      name: 'Roberto',
+      city: 'Itu',
+      email: 'roberto@cps.sp.gov.br',
+      status: 'Pendente',
+    },
+  ];
 
+  protected getReviewStatusClass(status: PendingReviewStatus): string {
+    return status === 'Pendente'
+      ? 'status-badge--pending'
+      : 'status-badge--warning';
+  }
 }

@@ -1,76 +1,170 @@
-<div class="dashboard-cards">
-  <div class="card">
+<div class="home-page">
 
-    <div class="card-header">
-      <span>Docentes Ativos</span>
-      <i class="pi pi-users icon-blue"></i>
+  <div class="home-header">
+    <div>
+      <h1>Visão geral</h1>
+
+      <p>
+        Acompanhe docentes e as revisões de disponibilidade em aberto.
+      </p>
     </div>
 
-    <div class="card-value">
-      {{ dashboard.docentesAtivos }}
-    </div>
+    <a class="action-button action-button--primary" routerLink="/coordinator/teachers">
+      <svg lucideClipboardList [size]="14"></svg>
+      Revisar disponibilidades
+    </a>
+  </div>
 
-    <div class="card-bottom">
-      <div class="progress-bar">
-        <div
-          class="progress-fill blue"
-          [style.width.%]="
-            (dashboard.disponibilidadesPreenchidas /
-            dashboard.totalDocentes) * 100">
-        </div>
+  <section class="availability-information" aria-label="Prazo para alterar disponibilidade">
+    <span>
+      <svg lucideCalendarClock [size]="14"></svg>
+      <strong>Alterações até:</strong>
+      {{ deadline.label }}
+    </span>
+    <a class="home-card__link" routerLink="/coordinator/teachers">
+      Gerenciar prazo
+      <svg lucideArrowRight [size]="12"></svg>
+    </a>
+  </section>
+
+
+  <div class="home-cards">
+
+    <article class="home-card">
+      <div class="home-card__header">
+        <span>Docentes ativos</span>
+
+        <svg lucideUsers [size]="20"></svg>
       </div>
-      
-      <div class="card-footer">
-        <span>Disponibilidades preenchidas</span>
+
+      <strong class="home-card__value">
+        {{ activeTeachers }}
+      </strong>
+
+      <div class="home-card__bottom">
+        <div class="home-progress">
+          <div class="home-progress__fill" [style.width.%]="activePercent"></div>
+        </div>
+
         <span>
-          {{ dashboard.disponibilidadesPreenchidas }}
-          / {{ dashboard.totalDocentes }}
+          {{ activeTeachers }} de {{ totalTeachers }} docentes cadastrados
         </span>
       </div>
+    </article>
 
-    </div>
+
+    <article class="home-card">
+      <div class="home-card__header">
+        <span>Revisões pendentes</span>
+
+        <svg lucideClipboardList [size]="20"></svg>
+      </div>
+
+      <strong class="home-card__value">
+        {{ pendingReviews.length }}
+      </strong>
+
+      <div class="home-card__bottom">
+        <span>
+          {{ inNegotiation }} em negociação com docentes
+        </span>
+
+        <a class="home-card__link" routerLink="/coordinator/teachers">
+          Ver disponibilidades
+
+          <svg lucideArrowRight [size]="12"></svg>
+        </a>
+      </div>
+    </article>
+
+
+    <article class="home-card">
+      <div class="home-card__header">
+        <span>Disponibilidades aprovadas</span>
+
+        <svg lucideCheckCheck [size]="20"></svg>
+      </div>
+
+      <strong class="home-card__value">
+        {{ approvedReviews }}
+      </strong>
+
+      <div class="home-card__bottom">
+        <span>
+          Revisões concluídas neste semestre
+        </span>
+
+        <a class="home-card__link" routerLink="/coordinator/teachers">
+          Ver docentes
+
+          <svg lucideArrowRight [size]="12"></svg>
+        </a>
+      </div>
+    </article>
 
   </div>
-  <div class="card">
-    <div class="card-header">
-      <span>Conflitos Pendentes</span>
-      <i class="pi pi-exclamation-circle icon-red"></i>
-    </div>
-    <div class="card-value">
-      {{ dashboard.conflitosPendentes }}
-    </div>
-    <div class="conflicts">
-      @for (conflito of dashboard.conflitos; track conflito) {
-        <div class="conflict-item">
-          1 • {{ conflito }}
-        </div>}
-    </div>
-  </div>
 
-  <div class="card">
-    <div class="card-header">
-      <span>Grades finalizadas</span>
-      <i class="pi pi-clock icon-green"></i>
-    </div>
-    <div class="card-value">{{ dashboard.gradesFinalizadas }} / {{ dashboard.totalGrades }}
+
+  <section class="pending-card">
+
+    <div class="pending-card__header">
+      <div>
+        <h2>Aguardando sua revisão</h2>
+
+        <p>
+          Disponibilidades que ainda precisam de uma análise do coordenador.
+        </p>
+      </div>
+
+      <span class="status-badge status-badge--pending">
+        <span class="status-badge__dot"></span>
+
+        {{ pendingReviews.length }}
+        {{ pendingReviews.length === 1 ? 'pendente' : 'pendentes' }}
+      </span>
     </div>
 
-    <div class="card-bottom">
 
-      <div class="progress-bar">
-        <div
-          class="progress-fill green"
-          [style.width.%]="
-            (dashboard.gradesFinalizadas /
-            dashboard.totalGrades) * 100">
+    @if (pendingReviews.length) {
+
+    <div class="pending-list">
+      @for (item of pendingReviews; track item.teacherId) {
+
+      <div class="pending-item">
+        <div class="pending-item__info">
+          <strong>{{ item.name }}</strong>
+
+          <span>{{ item.city }} • {{ item.email }}</span>
+
+          @if (item.message) {
+          <span class="pending-item__message">
+            “{{ item.message }}”
+          </span>
+          }
         </div>
+
+        <span class="status-badge" [class]="getReviewStatusClass(item.status)">
+          <span class="status-badge__dot"></span>
+
+          {{ item.status }}
+        </span>
+
+        <a class="edit-button" [routerLink]="['/coordinator/teachers', item.teacherId, 'schedule']"
+          [attr.aria-label]="'Revisar disponibilidade de ' + item.name">
+          Revisar
+          <svg lucideArrowRight [size]="12"></svg>
+        </a>
       </div>
 
-      <div class="card-footer">
-        <span>Meta de publicação</span>
-        <span>{{ dashboard.dataPublicacao }}</span>
-      </div>
+      }
     </div>
 
-  </div>
+    } @else {
+    <p class="pending-empty">
+      Nenhuma revisão pendente no momento.
+    </p>
+    }
+
+  </section>
+
 </div>
