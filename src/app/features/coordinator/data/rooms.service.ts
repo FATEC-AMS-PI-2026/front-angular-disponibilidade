@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import { API_BASE_URL } from '../../../shared/api.config';
+
 /* * Tipo de sala (tipoSala) como a API retorna */
 export interface RoomType {
   id: number;
@@ -36,7 +38,7 @@ export interface RoomPage {
 export class RoomsService {
   private readonly http = inject(HttpClient);
 
-  private readonly apiUrl = 'https://gini-api.vercel.app/salas';
+  private readonly apiUrl = `${API_BASE_URL}/salas`;
 
   getRooms(): Observable<RoomPage> {
     return this.http.get<RoomPage>(this.apiUrl);

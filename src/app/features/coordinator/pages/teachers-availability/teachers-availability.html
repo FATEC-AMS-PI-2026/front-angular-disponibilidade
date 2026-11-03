@@ -5,7 +5,7 @@
       <h1>Gestão de Disponibilidade</h1>
 
       <p>
-        Gerencie a verificação e edição de disponibilidade de docentes para cada disciplina
+        Acompanhe e revise a disponibilidade geral dos docentes.
       </p>
     </div>
 
@@ -18,172 +18,184 @@
   </div>
 
 
+  <section class="deadline-card">
+
+    <div class="deadline-card__info">
+      <svg class="deadline-card__icon" lucideCalendarClock [size]="20"></svg>
+
+      <div>
+        <strong>Prazo de envio da disponibilidade</strong>
+        <span>Prazo atual: {{ deadline.label }}</span>
+      </div>
+    </div>
+
+  </section>
+
+
   <div class="teachers-filters">
 
     <div class="search-field">
       <span class="search-field__icon">⌕</span>
 
-      <input type="text" placeholder="Nome, Matrícula ou titulação" />
+      <input type="search" placeholder="Nome, Matrícula, Cidade ou E-mail" aria-label="Buscar docentes" disabled />
     </div>
 
-    <select class="filter-select">
+    <select class="filter-select" aria-label="Filtrar por curso" disabled>
       <option>Todos os Cursos</option>
-      <option>ADS</option>
-      <option>Gestão Empresarial</option>
-      <option>Logística</option>
+
+      @for (course of courses(); track course) {
+      <option>{{ course }}</option>
+      }
     </select>
 
-    <select class="filter-select">
+    <select class="filter-select" aria-label="Filtrar por turno" disabled>
       <option>Todos os Turnos</option>
       <option>Manhã</option>
       <option>Tarde</option>
       <option>Noite</option>
     </select>
 
-    <select class="filter-select">
-      <option>Todos os Status</option>
-      <option>Validado</option>
-      <option>Restrita</option>
-      <option>Pendente</option>
+    <select class="filter-select" aria-label="Filtrar por disponibilidade" disabled>
+      <option value="Todos os Status">Todos os Status</option>
+      <option value="Pendente">Pendente</option>
+      <option value="Em revisão">Em revisão</option>
+      <option value="Aguardando coordenador">Aguardando coordenador</option>
+      <option value="Aprovada">Aprovada</option>
     </select>
 
   </div>
 
 
-  <div class="data-table-wrapper">
+  <div class="data-table-section">
 
-    <table class="data-table teachers-table">
+    <div class="data-table-wrapper">
 
-      <thead>
-        <tr>
-          <th>Docente</th>
-          <th>Curso e Disciplina</th>
-          <th>Carga</th>
-          <th>Período</th>
-          <th>Status</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
+      <table class="data-table teachers-table">
 
-      <tbody>
+        <thead>
+          <tr>
+            <th>Docente</th>
+            <th>Atuação</th>
+            <th>Carga</th>
+            <th>Turnos</th>
+            <th>Disponibilidade</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
 
-        @for (teacher of teachers; track teacher.registration) {
+        <tbody>
 
-        <tr [class.teachers-row--restricted]="teacher.status === 'Restrita'"
-          [class.teachers-row--pending]="teacher.status === 'Pendente'">
+          @for (teacher of teachers(); track teacher.id) {
 
-          <td>
-            <div class="teacher">
-              <span class="teacher__avatar">
-                @if (teacher.photo) {
-                <img [ngSrc]="teacher.photo" [alt]="teacher.name" width="44" height="44" />
-                } @else {
-                <svg lucideUserX [size]="18"></svg>
-                }
-              </span>
+          <tr [class.teachers-row--restricted]="teacher.status === 'INATIVO'">
 
+            <td>
+              <div class="teacher">
+                <span class="teacher__avatar">
+                  @if (teacher.photo) {
+                  <img [ngSrc]="teacher.photo" [alt]="teacher.name" width="44" height="44" />
+                  } @else {
+                  <svg lucideUserX [size]="18"></svg>
+                  }
+                </span>
+
+                <div class="cell-stack">
+                  <div class="cell-stack__name">
+                    <strong>{{ teacher.name }}</strong>
+
+                    @if (teacher.status === 'INATIVO') {
+                    <span class="teacher__inactive">Inativo</span>
+                    }
+                  </div>
+
+                  <span>{{ teacher.email }}</span>
+
+                  <span>Matr. {{ teacher.registration }} • {{ teacher.city }}</span>
+                </div>
+              </div>
+            </td>
+
+            <td>
               <div class="cell-stack">
-                <strong>{{ teacher.name }}</strong>
+                <strong>{{ teacher.course }}</strong>
 
-                <span>Matr. {{ teacher.registration }} • {{ teacher.email }}</span>
+                <span>{{ teacher.subjects }}</span>
               </div>
-            </div>
-          </td>
+            </td>
 
-          <td>
-            <div class="cell-stack">
-              <strong>{{ teacher.course }}</strong>
+            <td>
+              <div class="workload" [class]="'workload--' + level(teacher)">
+                <div class="workload__summary">
+                  <strong>{{ teacher.assignedHours }}h</strong>
+                  <span>/ {{ teacher.contractedHours }}h</span>
+                </div>
 
-              <span>{{ teacher.subjects }}</span>
-            </div>
-          </td>
-
-          <td>
-            <div class="workload" [class]="'workload--' + level(teacher)">
-              <div class="workload__summary">
-                <strong>{{ teacher.assignedHours }}/{{ teacher.contractedHours }}h</strong>
-
-                <span>{{ percent(teacher) }}%</span>
+                <div class="workload__bar" role="progressbar" [attr.aria-label]="'Carga horária de ' + teacher.name"
+                  aria-valuemin="0" aria-valuemax="100"
+                  [attr.aria-valuenow]="percent(teacher) > 100 ? 100 : percent(teacher)"
+                  [attr.aria-valuetext]="teacher.assignedHours + ' de ' + teacher.contractedHours + ' horas'">
+                  <div class="workload__fill" [style.width.%]="percent(teacher) > 100 ? 100 : percent(teacher)"></div>
+                </div>
               </div>
+            </td>
 
-              <div class="workload__bar">
-                <div class="workload__fill" [style.width.%]="percent(teacher) > 100 ? 100 : percent(teacher)"></div>
+            <td>
+              @if (teacher.shifts.length) {
+              <div class="period-list">
+                @for (shift of teacher.shifts; track shift) {
+                <span class="period-pill">{{ shift }}</span>
+                }
               </div>
-            </div>
-          </td>
-
-          <td>
-            @if (teacher.shifts.length) {
-            <div class="period-list">
-              @for (shift of teacher.shifts; track shift) {
-              <span class="period-pill">{{ shift }}</span>
+              } @else {
+              <span class="period-empty">Não preenchido</span>
               }
-            </div>
-            } @else {
-            <span class="period-empty">Não preenchido</span>
-            }
-          </td>
+            </td>
 
-          <td>
-            <span class="status-badge" [class.status-badge--available]="teacher.status === 'Validado'"
-              [class.status-badge--unavailable]="teacher.status === 'Restrita'"
-              [class.status-badge--pending]="teacher.status === 'Pendente'">
-              <span class="status-badge__dot"></span>
+            <td>
+              <span class="status-badge" [class]="getAvailabilityStatusClass(teacher.availabilityStatus)">
+                <span class="status-badge__dot"></span>
 
-              {{ teacher.status }}
-            </span>
-          </td>
+                {{ teacher.availabilityStatus }}
+              </span>
+            </td>
 
-          <td>
-            <button class="edit-button" type="button">
-              <svg lucidePencil [size]="12"></svg>
-              Editar
-            </button>
-          </td>
+            <td>
+              <a class="edit-button" [routerLink]="['/coordinator/teachers', teacher.id, 'schedule']"
+                [attr.aria-label]="'Ver grade de ' + teacher.name">
+                <svg lucideCalendarDays [size]="12"></svg>
+                Ver grade
+              </a>
+            </td>
 
-        </tr>
+          </tr>
 
+          } @empty {
+
+          <tr>
+            <td class="teachers-empty" colspan="6">
+              Nenhum docente encontrado com os filtros selecionados.
+            </td>
+          </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <div class="data-table-footer">
+
+      <span>
+        @if (teachersResponse().totalElements > 0) {
+        Exibindo {{ teachers().length }} de {{ teachersResponse().totalElements }}
+        docentes cadastrados
+        } @else {
+        Nenhum docente cadastrado
         }
-
-      </tbody>
-
-    </table>
-
-  </div>
-
-
-  <div class="data-table-footer">
-
-    <span>
-      Exibindo 1 a {{ teachers.length }} de {{ teachers.length }}
-      docentes cadastrados
-    </span>
-
-    <div class="pagination">
-
-      <button type="button" disabled>
-        Anterior
-      </button>
-
-      <button class="pagination__page pagination__page--active" type="button">
-        1
-      </button>
-
-      <button class="pagination__page" type="button">
-        2
-      </button>
-
-      <button class="pagination__page" type="button">
-        3
-      </button>
-
-      <button class="pagination__page" type="button">
-        4
-      </button>
-
-      <button type="button">
-        Próxima
-      </button>
+      </span>
 
     </div>
 
