@@ -1,5 +1,3 @@
-/* .action-button, .status-badge, .edit-button and .time-grid-table come from the global styles.scss */
-
 .profile-page {
   display: flex;
   flex-direction: column;
@@ -8,75 +6,138 @@
   padding: var(--page-padding);
 }
 
-/* Profile */
-
-.profile-card {
+.profile-header {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
 
-  min-height: var(--card-min-height-lg);
-
-  padding: var(--card-padding) var(--space-6);
-
-  background: var(--color-surface);
-  border: var(--border);
-  border-radius: var(--radius);
+  gap: var(--space-4);
 }
 
-.profile-card__identity {
-  display: flex;
-  align-items: center;
-  gap: var(--space-5);
-}
-
-.profile-card__avatar {
-  display: grid;
-  place-items: center;
-
-  width: var(--avatar-size);
-  height: var(--avatar-size);
-
-  border-right: var(--border);
+.profile-header h1 {
+  margin: 0;
 
   color: var(--color-text);
+
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
 }
 
-.profile-card__info {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-}
-
-.profile-card__label {
-  color: var(--color-text-muted);
-
-  font-size: var(--font-size-sm);
-}
-
-.profile-card__info strong {
-  font-size: var(--font-size-lg);
-  font-weight: 500;
-}
-
-.profile-card__actions {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: var(--space-3);
-}
-
-.profile-status {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
+.profile-header p {
+  margin: var(--space-1) 0 0;
 
   color: var(--color-text-secondary);
 
   font-size: var(--font-size-sm);
 }
 
-/* Summary */
+.profile-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: var(--space-6);
+
+  padding: var(--card-padding);
+
+  background: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius);
+
+  box-shadow: var(--shadow-card);
+}
+
+.profile-card__identity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+
+  min-width: 0;
+}
+
+.profile-card__avatar {
+  display: grid;
+  place-items: center;
+
+  flex-shrink: 0;
+
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+
+  border-radius: var(--radius-small);
+
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+.profile-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+
+  min-width: 0;
+}
+
+.profile-card__name {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.profile-card__name h2 {
+  margin: 0;
+
+  color: var(--color-text);
+
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+}
+
+.profile-card__meta {
+  color: var(--color-text-secondary);
+
+  font-size: var(--font-size-sm);
+}
+
+.profile-card__contact {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3) var(--space-6);
+
+  flex: 0 1 48%;
+
+  min-width: 0;
+}
+
+.profile-field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  min-width: 0;
+}
+
+.profile-field__label {
+  color: var(--color-text-muted);
+
+  font-size: var(--font-size-2xs);
+}
+
+.profile-field__value {
+  overflow: hidden;
+
+  color: var(--color-text);
+
+  font-size: var(--font-size-sm);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+a.profile-field__value:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
 
 .summary-grid {
   display: grid;
@@ -87,44 +148,47 @@
 
 .summary-card {
   display: flex;
-  align-items: center;
-  gap: var(--space-4);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
 
-  min-height: var(--card-min-height-sm);
-
-  padding: 0 var(--card-padding);
+  padding: var(--space-4) var(--card-padding);
 
   background: var(--color-surface);
   border: var(--border);
   border-radius: var(--radius);
+
+  box-shadow: var(--shadow-card);
 }
 
 .summary-card__label {
   color: var(--color-text-secondary);
 
-  font-size: var(--font-size-sm);
-
-  white-space: nowrap;
+  font-size: var(--font-size-xs);
 }
 
 .summary-card__values {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-6);
+  gap: var(--space-2);
 
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
 }
 
 .summary-card__values span {
-  white-space: nowrap;
+  padding: 2px var(--space-2);
+
+  border-radius: var(--radius-pill);
+
+  background: var(--color-surface-muted);
+  color: var(--color-text);
 }
 
-/* Schedule */
-
-.schedule-section {
+.profile-shift-schedule {
   display: flex;
   flex-direction: column;
-  gap: var(--section-gap);
+  gap: var(--space-2);
 }
 
 .schedule-header {
@@ -135,7 +199,7 @@
   gap: var(--space-4);
 }
 
-.schedule-header h1 {
+.schedule-header h2 {
   margin: 0;
 
   color: var(--color-text);
@@ -152,19 +216,11 @@
   font-size: var(--font-size-sm);
 }
 
-.schedule-actions {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-}
-
 .free-slot {
   color: var(--color-text-secondary);
 
   font-size: var(--font-size-xs);
 }
-
-/* Class card */
 
 .class-card {
   display: flex;
@@ -203,29 +259,32 @@
 }
 
 @media (max-width: 900px) {
-  .summary-grid {
-    grid-template-columns: 1fr;
-  }
 
+  .profile-header,
   .schedule-header {
     align-items: flex-start;
     flex-direction: column;
   }
-}
 
-@media (max-width: 600px) {
   .profile-card {
     align-items: flex-start;
     flex-direction: column;
-    gap: var(--space-4);
   }
 
-  .profile-card__actions {
-    align-items: flex-start;
-  }
+  .profile-card__contact {
+    flex: none;
 
-  .schedule-actions {
     width: 100%;
-    flex-wrap: wrap;
   }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .profile-card__contact {
+    grid-template-columns: 1fr;
+  }
+
 }

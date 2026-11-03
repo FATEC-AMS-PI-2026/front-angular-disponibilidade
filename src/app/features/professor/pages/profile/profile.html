@@ -1,32 +1,83 @@
 <div class="profile-page">
-  <section class="profile-card">
+
+  <div class="profile-header">
+    <div>
+      <h1>Meu perfil</h1>
+
+      <p>
+        Seus dados de contato, atuação e grade semanal.
+      </p>
+    </div>
+
+    <button class="action-button action-button--primary" type="button">
+      <svg lucidePencil [size]="12"></svg>
+      Editar perfil
+    </button>
+  </div>
+
+
+  <section class="profile-card" aria-label="Dados do professor">
+
     <div class="profile-card__identity">
       <div class="profile-card__avatar">
         <svg lucideUserRound [size]="38" [strokeWidth]="1.4"></svg>
       </div>
 
       <div class="profile-card__info">
-        <span class="profile-card__label">Nome</span>
-        <strong>{{ profile.name }}</strong>
+        <div class="profile-card__name">
+          <h2>{{ profile.name }}</h2>
+
+          <span class="status-badge">
+            <span class="status-badge__dot"></span>
+            {{ profile.status }}
+          </span>
+        </div>
+
+        <span class="profile-card__meta">{{ profile.city }}</span>
       </div>
     </div>
 
-    <div class="profile-card__actions">
-      <div class="profile-status">
-        <span>Status</span>
 
-        <span class="status-badge">
-          <span class="status-badge__dot"></span>
-          {{ profile.status }}
-        </span>
+    <div class="profile-card__contact">
+
+      <div class="profile-field">
+        <span class="profile-field__label">E-mail</span>
+
+        <a class="profile-field__value" [href]="'mailto:' + profile.email">
+          {{ profile.email }}
+        </a>
       </div>
 
-      <button class="edit-button" type="button">
-        <svg lucidePencil [size]="12"></svg>
-        Editar perfil
-      </button>
+      <div class="profile-field">
+        <span class="profile-field__label">Matrícula</span>
+
+        <strong class="profile-field__value">
+          {{ profile.registration }}
+        </strong>
+      </div>
+
+      <div class="profile-field">
+        <span class="profile-field__label">Unidade</span>
+
+        <strong class="profile-field__value">
+          {{ profile.unit }}
+        </strong>
+      </div>
+
+      <div class="profile-field">
+        <span class="profile-field__label">Turnos</span>
+
+        <div class="shift-pills">
+          @for (shift of shifts(); track shift) {
+          <span class="shift-pill">{{ shift }}</span>
+          }
+        </div>
+      </div>
+
     </div>
+
   </section>
+
 
   <section class="summary-grid">
     <article class="summary-card">
@@ -54,79 +105,87 @@
     </article>
   </section>
 
+
   <section class="schedule-section">
     <div class="schedule-header">
       <div>
-        <h1>Status das Grades por Semestre</h1>
+        <h2>Grade semanal</h2>
 
         <p>
-          Grade atual por professor. Filtre por semestre disponível ao lado.
+          Aulas e horários livres na semana.
         </p>
       </div>
 
-      <div class="schedule-actions">
-        <button class="action-button action-button--primary" type="button">
-          <svg lucideFilter [size]="12"></svg>
-          Filtrar
-        </button>
+      <button class="action-button" type="button">
+        <svg lucideDownload [size]="12"></svg>
+        Exportar grade
+      </button>
+    </div>
 
-        <button class="action-button action-button--primary" type="button">
-          <svg lucideDownload [size]="12"></svg>
-          Exportar Geral
-        </button>
+    @if (shifts().length) {
+    <div class="filter-bar">
+      <div class="filter-bar__field">
+        <span class="filter-bar__label">Semestre</span>
+        <select class="filter-select" aria-label="Semestre da grade">
+          <option selected [value]="semester">{{ semester }}</option>
+          <option disabled>Semestre anterior (sem grade cadastrada)</option>
+        </select>
+      </div>
+
+      <div class="filter-bar__field">
+        <span class="filter-bar__label">Turno</span>
+        <div class="filter-bar__segments" role="group" aria-label="Turno da grade">
+          @for (shift of shifts(); track shift) {
+          <button class="action-button" type="button" [class.action-button--primary]="currentShift() === shift"
+            [attr.aria-pressed]="currentShift() === shift" (click)="selectShift(shift)">{{ shift }}</button>
+          }
+        </div>
       </div>
     </div>
 
-    <div class="time-grid-table-wrapper">
-      <table class="time-grid-table">
-        <thead>
-          <tr>
-            <th class="time-grid-table__time-header">
-              Hora / Dia
-            </th>
+    <section class="profile-shift-schedule" [attr.aria-label]="'Grade do turno ' + currentShift()">
+      <h3>{{ currentShift() }}</h3>
 
-            @for (day of weekDays; track day) {
-            <th>{{ day }}</th>
-            }
-          </tr>
-        </thead>
-
-        <tbody>
-          @for (period of schedulePeriods; track period.startTime) {
-          <tr>
-            <td class="time-grid-table__time">
-              {{ period.startTime }} - {{ period.endTime }}
-            </td>
-
-            @for (day of weekDays; track day) {
-            @let classItem = getClass(
-            day,
-            period.startTime,
-            period.endTime
-            );
-
-            <td>
-              @if (classItem) {
-              <div class="class-card">
-                <strong>{{ classItem.code }}</strong>
-
-                <span>{{ classItem.discipline }}</span>
-
-                <small>{{ classItem.location }}</small>
-
-                <small>
-                  {{ classItem.startTime }} - {{ classItem.endTime }}
-                </small>
-              </div>
-              } @else {
-              <span class="free-slot">Livre</span>
+      <div class="time-grid-table-wrapper">
+        <table class="time-grid-table">
+          <thead>
+            <tr>
+              <th class="time-grid-table__time-header">Hora / Dia</th>
+              @for (day of weekDays; track day) {
+              <th>{{ day }}</th>
               }
-            </td>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (period of visiblePeriods(); track period.startTime) {
+            <tr>
+              <td class="time-grid-table__time">
+                {{ period.startTime }} - {{ period.endTime }}
+              </td>
+              @for (day of weekDays; track day) {
+              @let classItem = getClass(day, period.startTime, period.endTime);
+              <td>
+                @if (classItem) {
+                <div class="class-card">
+                  <strong>{{ classItem.code }}</strong>
+                  <span>{{ classItem.discipline }}</span>
+                  <small>{{ classItem.location }}</small>
+                  <small>{{ classItem.startTime }} - {{ classItem.endTime }}</small>
+                </div>
+                } @else {
+                <span class="free-slot">Livre</span>
+                }
+              </td>
+              }
+            </tr>
             }
-          </tr>
-          }
-        </tbody>
-      </table>
-    </div>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    } @else {
+    <p class="free-slot">Nenhum turno selecionado.</p>
+    }
   </section>
 </div>
