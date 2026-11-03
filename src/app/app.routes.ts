@@ -54,6 +54,10 @@ export const routes: Routes = [
         path: 'teachers',
         loadComponent: () => import('./features/coordinator/pages/teachers-availability/teachers-availability').then(component => component.TeachersAvailabilityComponent),
       },
+      {
+        path: 'teachers/:id/schedule',
+        loadComponent: () => import('./features/coordinator/pages/teacher-schedule/teacher-schedule').then(component => component.TeacherScheduleComponent),
+      },
     ],
   },
   {

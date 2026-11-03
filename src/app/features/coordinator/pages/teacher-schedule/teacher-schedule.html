@@ -1,0 +1,214 @@
+<div class="teacher-schedule-page">
+
+  <section class="teacher-schedule-header">
+
+    <div class="teacher-schedule-header__main">
+
+      <div class="teacher-schedule-header__title">
+        <a class="back-button" routerLink="/coordinator/teachers">
+          <svg lucideArrowLeft [size]="12"></svg>
+          Voltar para disponibilidade
+        </a>
+
+        <h1>Grade de disponibilidade</h1>
+
+        <p class="teacher-schedule-header__subtitle">
+          {{ teacherLabel() }}
+        </p>
+      </div>
+
+      <div class="availability-information">
+
+        <span>
+          <svg lucideCalendarDays [size]="11"></svg>
+
+          <strong>Semestre:</strong>
+          AMS
+        </span>
+
+        <span>
+          <svg lucideClock3 [size]="11"></svg>
+
+          <strong>Turnos:</strong>
+          @if (teacherShifts().length) {
+          {{ teacherShifts().join(' • ') }}
+          } @else {
+          Não informado
+          }
+        </span>
+
+        <span>
+          <svg lucideUserRound [size]="11"></svg>
+
+          <strong>Coordenador:</strong>
+          Tadeu Maffei
+        </span>
+
+        <span>
+          <svg lucideBuilding2 [size]="11"></svg>
+
+          <strong>Ambiente:</strong>
+          Fatec Dom Amaury Castanho
+        </span>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section class="schedule-card">
+
+    <div class="schedule-card__header">
+
+      <div>
+        <h2>Disponibilidade semanal</h2>
+
+        <p>
+          Disponibilidade informada para o semestre.
+        </p>
+      </div>
+
+      <div class="availability-legend">
+
+        <span>
+          <i class="availability-legend__dot availability-legend__dot--available"></i>
+          Disponível
+        </span>
+
+        <span>
+          <i class="availability-legend__dot availability-legend__dot--negotiable"></i>
+          Negociável
+        </span>
+
+        <span>
+          <i class="availability-legend__dot availability-legend__dot--unavailable"></i>
+          Indisponível
+        </span>
+
+      </div>
+
+    </div>
+
+
+    @for (schedule of shiftSchedules(); track schedule.shift) {
+    <section class="shift-schedule" [attr.aria-label]="'Turno ' + schedule.shift">
+      <h3>{{ schedule.shift }}</h3>
+
+      <div class="time-grid-table-wrapper">
+        <table class="time-grid-table">
+          <thead>
+            <tr>
+              <th class="time-grid-table__time-header">Hora / Dia</th>
+              @for (day of schedule.days; track day.day) {
+              <th>{{ day.day }}</th>
+              }
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (timeSlot of schedule.days[0].slots; track timeSlot.id; let slotIndex = $index) {
+            <tr>
+              <td class="time-grid-table__time">
+                {{ timeSlot.startTime }} - {{ timeSlot.endTime }}
+              </td>
+              @for (day of schedule.days; track day.day) {
+              @let slot = day.slots[slotIndex];
+              <td>
+                <div class="availability-slot" [class.availability-slot--available]="slot.status === 'Disponível'"
+                  [class.availability-slot--negotiable]="slot.status === 'Negociável'"
+                  [class.availability-slot--unavailable]="slot.status === 'Indisponível'" [attr.aria-label]="
+                    day.day + ', ' + slot.startTime + ' às ' + slot.endTime +
+                    ': ' + slot.status
+                  ">
+                  <span class="availability-slot__status">{{ slot.status }}</span>
+                </div>
+              </td>
+              }
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+    }
+
+  </section>
+
+
+  <section class="schedule-review">
+
+    <div class="schedule-review__header">
+      <div>
+        <h2>Revisão</h2>
+
+        <p>
+          Envie a proposta ao professor para aprovação.
+        </p>
+      </div>
+
+      <span class="status-badge status-badge--pending">
+        <span class="status-badge__dot"></span>
+
+        {{ reviewStatus() }}
+      </span>
+    </div>
+
+
+    @if (messages().length) {
+    <ul class="review-thread" aria-label="Histórico da negociação">
+      @for (message of messages(); track $index) {
+      <li class="review-message" [class.review-message--mine]="message.author === 'Coordenador'">
+        <div class="review-message__meta">
+          <strong>{{ message.author }}</strong>
+
+          <span>{{ message.time }}</span>
+        </div>
+
+        <p>{{ message.text }}</p>
+      </li>
+      }
+    </ul>
+    } @else {
+    <p class="review-empty">
+      Nenhuma mensagem enviada ainda. Escreva abaixo para negociar com o docente.
+    </p>
+    }
+
+
+    @if (reviewStatus() === 'Aguardando professor') {
+    <p class="review-note">
+      Proposta enviada. Aguardando aprovação do professor.
+    </p>
+    } @else {
+    <div class="review-composer">
+      <label class="review-composer__label" for="review-message">
+        Mensagem para o professor
+      </label>
+
+      <textarea id="review-message" class="review-composer__input" rows="3"
+        placeholder="Descreva os ajustes propostos para a disponibilidade..." [value]="message()"
+        (input)="onMessageInput($event)"></textarea>
+
+      <div class="review-composer__actions">
+        <span class="review-composer__hint">
+          A mensagem é necessária para encaminhar a proposta.
+        </span>
+
+        <div class="review-composer__buttons">
+          <button class="action-button action-button--primary" type="button" [disabled]="!message().trim()"
+            (click)="sendForApproval()">
+            <svg lucideSend [size]="12"></svg>
+            Enviar para aprovação
+          </button>
+        </div>
+      </div>
+    </div>
+    }
+
+  </section>
+
+
+
+</div>

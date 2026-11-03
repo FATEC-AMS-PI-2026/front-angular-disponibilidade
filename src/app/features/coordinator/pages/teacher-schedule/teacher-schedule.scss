@@ -1,0 +1,196 @@
+.teacher-schedule-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--page-gap);
+
+  padding: var(--page-padding);
+}
+
+.teacher-schedule-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: var(--space-4);
+}
+
+.teacher-schedule-header__main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.teacher-schedule-header__title {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.teacher-schedule-header h1 {
+  margin: 0;
+
+  color: var(--color-text);
+
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+}
+
+.teacher-schedule-header__subtitle {
+  margin: 0;
+
+  color: var(--color-text-secondary);
+
+  font-size: var(--font-size-sm);
+}
+
+.schedule-review {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+
+  padding: var(--card-padding);
+
+  background: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius);
+
+  box-shadow: var(--shadow-card);
+}
+
+.schedule-review__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: var(--space-4);
+}
+
+.schedule-review__header h2 {
+  margin: 0;
+
+  color: var(--color-text);
+
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+}
+
+.schedule-review__header p {
+  margin: var(--space-1) 0 0;
+
+  color: var(--color-text-secondary);
+
+  font-size: var(--font-size-sm);
+}
+
+.schedule-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+
+  padding: var(--card-padding);
+
+  background: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius);
+
+  box-shadow: var(--shadow-card);
+}
+
+.shift-schedule {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.shift-schedule h3,
+.profile-shift-schedule h3 {
+  margin: 0;
+
+  color: var(--color-text);
+
+  font-size: var(--font-size-md);
+  font-weight: 600;
+}
+
+.schedule-card__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: var(--space-4);
+}
+
+.schedule-card__header h2 {
+  margin: 0;
+
+  color: var(--color-text);
+
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+}
+
+.schedule-card__header p {
+  margin: var(--space-1) 0 0;
+
+  color: var(--color-text-secondary);
+
+  font-size: var(--font-size-sm);
+}
+
+.availability-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+  min-height: var(--block-min-height);
+
+  padding: var(--space-2);
+
+  border-radius: var(--radius-small);
+
+  font-size: var(--font-size-xs);
+
+  transition:
+    filter var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.availability-slot__status {
+  font-weight: 500;
+}
+
+.availability-slot--available {
+  background: var(--color-available-solid);
+  color: var(--color-on-solid);
+}
+
+.availability-slot--negotiable {
+  background: var(--color-negotiable-solid);
+  color: var(--color-on-solid);
+}
+
+.availability-slot--unavailable {
+  background: var(--color-surface-muted);
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 900px) {
+
+  .teacher-schedule-header,
+  .schedule-card__header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .schedule-review__header {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 600px) {
+  .availability-legend {
+    flex-wrap: wrap;
+  }
+}
