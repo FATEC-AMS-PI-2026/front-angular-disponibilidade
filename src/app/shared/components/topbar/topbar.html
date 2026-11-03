@@ -1,13 +1,13 @@
 <header class="topbar">
   <div class="topbar__breadcrumb">
-    Disponibilidade
+    {{ breadcrumb() }}
   </div>
 
   <div class="topbar__actions">
     <div class="topbar__search">
       <svg lucideSearch [size]="13"></svg>
 
-      <input type="search" placeholder="Buscar salas, professores, informações..." aria-label="Buscar" />
+      <input type="search" placeholder="Buscar professores, informações..." aria-label="Buscar" />
     </div>
 
     <button class="topbar__notification" type="button" aria-label="Notificações">

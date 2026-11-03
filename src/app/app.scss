@@ -11,3 +11,20 @@
 .app-main {
   min-height: calc(100vh - var(--topbar-height));
 }
+
+@media (max-width: 760px) {
+  .app-shell {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .app-content {
+    flex: 1;
+    min-height: 0;
+    margin-left: 0;
+  }
+
+  .app-main {
+    min-height: 0;
+  }
+}

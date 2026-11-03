@@ -6,7 +6,6 @@ import {
   LucideCalendarDays,
   LucideHome,
   LucideLogOut,
-  LucideMapPin,
   LucideSettings,
 } from '@lucide/angular';
 
@@ -18,7 +17,6 @@ import {
     NgOptimizedImage,
     LucideHome,
     LucideCalendarDays,
-    LucideMapPin,
     LucideLogOut,
     LucideSettings,
   ],
